@@ -65,8 +65,8 @@
           <span class="kpi-num-badge">KPI 1</span>
           <div class="kpi-inner">
             <span class="kpi-tit">연간 순매출액</span>
-            <span class="kpi-val text-cyan">29.71<small>억원</small></span>
-            <span class="kpi-sub">총 30.15억 (반품률 1.45%)</span>
+            <span class="kpi-val text-cyan" id="kpi-val-net">29.71<small>억원</small></span>
+            <span class="kpi-sub" id="kpi-sub-net">정가 37.55억 · 반품 4,361만원 (1.45%)</span>
           </div>
         </div>
 
@@ -74,8 +74,8 @@
           <span class="kpi-num-badge">KPI 2</span>
           <div class="kpi-inner">
             <span class="kpi-tit">건당 결제액(AOV)</span>
-            <span class="kpi-val text-purple">49,451<small>원</small></span>
-            <span class="kpi-sub">인당 29.7만원 / 연 6.0회</span>
+            <span class="kpi-val text-purple" id="kpi-val-aov">49,451<small>원</small></span>
+            <span class="kpi-sub" id="kpi-sub-aov">인당 29.7만원 / 연 6.01회</span>
           </div>
         </div>
 
@@ -101,8 +101,8 @@
           <span class="kpi-num-badge">KPI 5</span>
           <div class="kpi-inner">
             <span class="kpi-tit">간편결제(Pay) 비중</span>
-            <span class="kpi-val text-amber">28.1<small>%</small></span>
-            <span class="kpi-sub">총 25,476건 (신용 56.8%)</span>
+            <span class="kpi-val text-amber" id="kpi-val-pay">28.1<small>%</small></span>
+            <span class="kpi-sub" id="kpi-sub-pay">순정상 거래 25,088건</span>
           </div>
         </div>
       </section>
@@ -267,19 +267,19 @@
             <!-- Simulation KPI Output Cards -->
             <div class="sim-result-grid">
               <div class="sim-stat-card border-green">
-                <span class="sim-stat-lbl">연간 프로모션 예산 절감</span>
-                <span class="sim-stat-val text-emerald" id="res-saved-cost">+7,420만원</span>
-                <span class="sim-stat-hint">체리피커 불필요 할인 차단</span>
+                <span class="sim-stat-lbl">연간 프로모션 예산 절감 (가정)</span>
+                <span class="sim-stat-val text-emerald" id="res-saved-cost">+4,029만원</span>
+                <span class="sim-stat-hint">체리피커 불필요 할인 차단분</span>
               </div>
               <div class="sim-stat-card border-blue">
                 <span class="sim-stat-lbl">VIP 리텐션 기대 매출 효과</span>
-                <span class="sim-stat-val text-cyan" id="res-loyal-boost">+4,200만원</span>
-                <span class="sim-stat-hint">이탈 방지 및 객단가 업셀링</span>
+                <span class="sim-stat-val text-cyan" id="res-loyal-boost">+4,197만원</span>
+                <span class="sim-stat-hint">VIP 락인 및 업셀링 기여</span>
               </div>
               <div class="sim-stat-card border-gold highlight-gold">
-                <span class="sim-stat-lbl">🌟 최종 연간 순이익 개선 예상</span>
-                <span class="sim-stat-val text-gold" id="res-net-profit">+1억 1,620만원</span>
-                <span class="sim-stat-hint">영업이익률 +3.9%p 상승 효과</span>
+                <span class="sim-stat-lbl">🌟 시나리오 순이익 개선 예상</span>
+                <span class="sim-stat-val text-gold" id="res-net-profit">+5,078만원</span>
+                <span class="sim-stat-hint">공헌이익률 25% 가정 기반</span>
               </div>
             </div>
 
