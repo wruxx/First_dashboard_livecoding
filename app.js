@@ -4902,7 +4902,9 @@ const CLUSTER_DATA = {
           "총구매금액": 1623700,
           "점포명": "청량리점"
         }
-      ]
+      ],
+      "persona_name": "박서준 (30대 맞벌이 가장) (C003246)",
+      "persona_bio": "퇴근길 잠실점 오프라인 픽업과 주말 온라인 배송을 적극 활용하는 옴니채널 애호 고객입니다."
     },
     "C007396": {
       "id": "C007396",
@@ -4992,7 +4994,9 @@ const CLUSTER_DATA = {
           "총구매금액": 656800,
           "점포명": "서울역점"
         }
-      ]
+      ],
+      "persona_name": "김민준 (40대 주부/자영업) (C007396)",
+      "persona_bio": "매주 2~3회 온·오프라인을 넘나들며 식자재와 생활용품을 장바구니에 담는 장마트의 대표 VIP 단골손님입니다."
     },
     "C005609": {
       "id": "C005609",
@@ -5082,7 +5086,9 @@ const CLUSTER_DATA = {
           "총구매금액": 884700,
           "점포명": "왕십리점"
         }
-      ]
+      ],
+      "persona_name": "김민준 (40대 주부/자영업) (C005609)",
+      "persona_bio": "매주 2~3회 온·오프라인을 넘나들며 식자재와 생활용품을 장바구니에 담는 장마트의 대표 VIP 단골손님입니다."
     },
     "C001706": {
       "id": "C001706",
@@ -5172,7 +5178,9 @@ const CLUSTER_DATA = {
           "총구매금액": 12900,
           "점포명": "온라인몰"
         }
-      ]
+      ],
+      "persona_name": "박서준 (30대 맞벌이 가장) (C001706)",
+      "persona_bio": "퇴근길 잠실점 오프라인 픽업과 주말 온라인 배송을 적극 활용하는 옴니채널 애호 고객입니다."
     },
     "C002280": {
       "id": "C002280",
@@ -5262,7 +5270,9 @@ const CLUSTER_DATA = {
           "총구매금액": 39500,
           "점포명": "왕십리점"
         }
-      ]
+      ],
+      "persona_name": "이영희 (50대 전문직) (C002280)",
+      "persona_bio": "정기 배송과 대량 장보기를 애용하며, 품질 좋은 신선식품과 건강식품을 최우선으로 구매하는 핵심 우수고객입니다."
     },
     "C005225": {
       "id": "C005225",
@@ -5352,7 +5362,9 @@ const CLUSTER_DATA = {
           "총구매금액": 255100,
           "점포명": "온라인몰"
         }
-      ]
+      ],
+      "persona_name": "김민준 (40대 주부/자영업) (C005225)",
+      "persona_bio": "매주 2~3회 온·오프라인을 넘나들며 식자재와 생활용품을 장바구니에 담는 장마트의 대표 VIP 단골손님입니다."
     },
     "C000713": {
       "id": "C000713",
@@ -5442,7 +5454,9 @@ const CLUSTER_DATA = {
           "총구매금액": 13100,
           "점포명": "수원점"
         }
-      ]
+      ],
+      "persona_name": "김민준 (40대 주부/자영업) (C000713)",
+      "persona_bio": "매주 2~3회 온·오프라인을 넘나들며 식자재와 생활용품을 장바구니에 담는 장마트의 대표 VIP 단골손님입니다."
     },
     "C002654": {
       "id": "C002654",
@@ -5532,7 +5546,9 @@ const CLUSTER_DATA = {
           "총구매금액": 16700,
           "점포명": "왕십리점"
         }
-      ]
+      ],
+      "persona_name": "김민준 (40대 주부/자영업) (C002654)",
+      "persona_bio": "매주 2~3회 온·오프라인을 넘나들며 식자재와 생활용품을 장바구니에 담는 장마트의 대표 VIP 단골손님입니다."
     },
     "C002850": {
       "id": "C002850",
@@ -5622,7 +5638,9 @@ const CLUSTER_DATA = {
           "총구매금액": 145300,
           "점포명": "김포공항점"
         }
-      ]
+      ],
+      "persona_name": "박서준 (30대 맞벌이 가장) (C002850)",
+      "persona_bio": "퇴근길 잠실점 오프라인 픽업과 주말 온라인 배송을 적극 활용하는 옴니채널 애호 고객입니다."
     },
     "C006446": {
       "id": "C006446",
@@ -5712,7 +5730,9 @@ const CLUSTER_DATA = {
           "총구매금액": 19500,
           "점포명": "수원점"
         }
-      ]
+      ],
+      "persona_name": "김민준 (40대 주부/자영업) (C006446)",
+      "persona_bio": "매주 2~3회 온·오프라인을 넘나들며 식자재와 생활용품을 장바구니에 담는 장마트의 대표 VIP 단골손님입니다."
     },
     "C009367": {
       "id": "C009367",
@@ -5802,7 +5822,9 @@ const CLUSTER_DATA = {
           "총구매금액": 5300,
           "점포명": "온라인몰"
         }
-      ]
+      ],
+      "persona_name": "박서준 (30대 맞벌이 가장) (C009367)",
+      "persona_bio": "퇴근길 잠실점 오프라인 픽업과 주말 온라인 배송을 적극 활용하는 옴니채널 애호 고객입니다."
     },
     "C005352": {
       "id": "C005352",
@@ -5892,7 +5914,9 @@ const CLUSTER_DATA = {
           "총구매금액": 9000,
           "점포명": "온라인몰"
         }
-      ]
+      ],
+      "persona_name": "박서준 (30대 맞벌이 가장) (C005352)",
+      "persona_bio": "퇴근길 잠실점 오프라인 픽업과 주말 온라인 배송을 적극 활용하는 옴니채널 애호 고객입니다."
     },
     "C001265": {
       "id": "C001265",
@@ -5982,7 +6006,9 @@ const CLUSTER_DATA = {
           "총구매금액": 80600,
           "점포명": "서울역점"
         }
-      ]
+      ],
+      "persona_name": "박서준 (30대 맞벌이 가장) (C001265)",
+      "persona_bio": "퇴근길 잠실점 오프라인 픽업과 주말 온라인 배송을 적극 활용하는 옴니채널 애호 고객입니다."
     },
     "C004019": {
       "id": "C004019",
@@ -6072,7 +6098,9 @@ const CLUSTER_DATA = {
           "총구매금액": 20200,
           "점포명": "온라인몰"
         }
-      ]
+      ],
+      "persona_name": "김민준 (40대 주부/자영업) (C004019)",
+      "persona_bio": "매주 2~3회 온·오프라인을 넘나들며 식자재와 생활용품을 장바구니에 담는 장마트의 대표 VIP 단골손님입니다."
     },
     "C009278": {
       "id": "C009278",
@@ -6162,7 +6190,9 @@ const CLUSTER_DATA = {
           "총구매금액": 18800,
           "점포명": "수원점"
         }
-      ]
+      ],
+      "persona_name": "박서준 (30대 맞벌이 가장) (C009278)",
+      "persona_bio": "퇴근길 잠실점 오프라인 픽업과 주말 온라인 배송을 적극 활용하는 옴니채널 애호 고객입니다."
     },
     "C008004": {
       "id": "C008004",
@@ -6244,7 +6274,9 @@ const CLUSTER_DATA = {
           "총구매금액": 341300,
           "점포명": "강남점"
         }
-      ]
+      ],
+      "persona_name": "최도윤 (40대 전문직) (C008004)",
+      "persona_bio": "브랜드 신뢰도를 중시하여 단가가 높은 프리미엄 조리도구 및 가전제품 위주로 장바구니를 채우는 하이엔드 소비자입니다."
     },
     "C003153": {
       "id": "C003153",
@@ -6310,7 +6342,9 @@ const CLUSTER_DATA = {
           "총구매금액": 1671400,
           "점포명": "청량리점"
         }
-      ]
+      ],
+      "persona_name": "정수진 (30대 IT 개발자) (C003153)",
+      "persona_bio": "필요한 물건이 생기면 가격 할인 여부와 상관없이 소형가전과 프리미엄 침구류를 원스톱 결제하는 고소득 프리미엄 고객입니다."
     },
     "C004563": {
       "id": "C004563",
@@ -6360,7 +6394,9 @@ const CLUSTER_DATA = {
           "총구매금액": 18200,
           "점포명": "서울역점"
         }
-      ]
+      ],
+      "persona_name": "정수진 (30대 IT 개발자) (C004563)",
+      "persona_bio": "필요한 물건이 생기면 가격 할인 여부와 상관없이 소형가전과 프리미엄 침구류를 원스톱 결제하는 고소득 프리미엄 고객입니다."
     },
     "C008916": {
       "id": "C008916",
@@ -6434,7 +6470,9 @@ const CLUSTER_DATA = {
           "총구매금액": 14300,
           "점포명": "온라인몰"
         }
-      ]
+      ],
+      "persona_name": "정수진 (30대 IT 개발자) (C008916)",
+      "persona_bio": "필요한 물건이 생기면 가격 할인 여부와 상관없이 소형가전과 프리미엄 침구류를 원스톱 결제하는 고소득 프리미엄 고객입니다."
     },
     "C003377": {
       "id": "C003377",
@@ -6516,7 +6554,9 @@ const CLUSTER_DATA = {
           "총구매금액": 20800,
           "점포명": "왕십리점"
         }
-      ]
+      ],
+      "persona_name": "정수진 (30대 IT 개발자) (C003377)",
+      "persona_bio": "필요한 물건이 생기면 가격 할인 여부와 상관없이 소형가전과 프리미엄 침구류를 원스톱 결제하는 고소득 프리미엄 고객입니다."
     },
     "C005536": {
       "id": "C005536",
@@ -6598,7 +6638,9 @@ const CLUSTER_DATA = {
           "총구매금액": 68100,
           "점포명": "온라인몰"
         }
-      ]
+      ],
+      "persona_name": "정수진 (30대 IT 개발자) (C005536)",
+      "persona_bio": "필요한 물건이 생기면 가격 할인 여부와 상관없이 소형가전과 프리미엄 침구류를 원스톱 결제하는 고소득 프리미엄 고객입니다."
     },
     "C009493": {
       "id": "C009493",
@@ -6640,7 +6682,9 @@ const CLUSTER_DATA = {
           "총구매금액": 53900,
           "점포명": "강남점"
         }
-      ]
+      ],
+      "persona_name": "한지우 (30대 인테리어 디자이너) (C009493)",
+      "persona_bio": "인테리어 감성의 주방용품과 홈 패브릭 상품에 아낌없이 투자하는 정가 지불형 VIP 고객입니다."
     },
     "C007742": {
       "id": "C007742",
@@ -6682,7 +6726,9 @@ const CLUSTER_DATA = {
           "총구매금액": 319300,
           "점포명": "왕십리점"
         }
-      ]
+      ],
+      "persona_name": "한지우 (30대 인테리어 디자이너) (C007742)",
+      "persona_bio": "인테리어 감성의 주방용품과 홈 패브릭 상품에 아낌없이 투자하는 정가 지불형 VIP 고객입니다."
     },
     "C009393": {
       "id": "C009393",
@@ -6756,7 +6802,9 @@ const CLUSTER_DATA = {
           "총구매금액": 156100,
           "점포명": "온라인몰"
         }
-      ]
+      ],
+      "persona_name": "정수진 (30대 IT 개발자) (C009393)",
+      "persona_bio": "필요한 물건이 생기면 가격 할인 여부와 상관없이 소형가전과 프리미엄 침구류를 원스톱 결제하는 고소득 프리미엄 고객입니다."
     },
     "C004664": {
       "id": "C004664",
@@ -6806,7 +6854,9 @@ const CLUSTER_DATA = {
           "총구매금액": 178100,
           "점포명": "온라인몰"
         }
-      ]
+      ],
+      "persona_name": "한지우 (30대 인테리어 디자이너) (C004664)",
+      "persona_bio": "인테리어 감성의 주방용품과 홈 패브릭 상품에 아낌없이 투자하는 정가 지불형 VIP 고객입니다."
     },
     "C006422": {
       "id": "C006422",
@@ -6888,7 +6938,9 @@ const CLUSTER_DATA = {
           "총구매금액": 9100,
           "점포명": "영등포점"
         }
-      ]
+      ],
+      "persona_name": "정수진 (30대 IT 개발자) (C006422)",
+      "persona_bio": "필요한 물건이 생기면 가격 할인 여부와 상관없이 소형가전과 프리미엄 침구류를 원스톱 결제하는 고소득 프리미엄 고객입니다."
     },
     "C000791": {
       "id": "C000791",
@@ -6930,7 +6982,9 @@ const CLUSTER_DATA = {
           "총구매금액": 10400,
           "점포명": "김포공항점"
         }
-      ]
+      ],
+      "persona_name": "한지우 (30대 인테리어 디자이너) (C000791)",
+      "persona_bio": "인테리어 감성의 주방용품과 홈 패브릭 상품에 아낌없이 투자하는 정가 지불형 VIP 고객입니다."
     },
     "C002052": {
       "id": "C002052",
@@ -6988,7 +7042,9 @@ const CLUSTER_DATA = {
           "총구매금액": 992200,
           "점포명": "강남점"
         }
-      ]
+      ],
+      "persona_name": "한지우 (30대 인테리어 디자이너) (C002052)",
+      "persona_bio": "인테리어 감성의 주방용품과 홈 패브릭 상품에 아낌없이 투자하는 정가 지불형 VIP 고객입니다."
     },
     "C007708": {
       "id": "C007708",
@@ -7078,7 +7134,9 @@ const CLUSTER_DATA = {
           "총구매금액": 9600,
           "점포명": "온라인몰"
         }
-      ]
+      ],
+      "persona_name": "한지우 (30대 인테리어 디자이너) (C007708)",
+      "persona_bio": "인테리어 감성의 주방용품과 홈 패브릭 상품에 아낌없이 투자하는 정가 지불형 VIP 고객입니다."
     },
     "C006109": {
       "id": "C006109",
@@ -7128,7 +7186,9 @@ const CLUSTER_DATA = {
           "총구매금액": 46300,
           "점포명": "영등포점"
         }
-      ]
+      ],
+      "persona_name": "한지우 (30대 인테리어 디자이너) (C006109)",
+      "persona_bio": "인테리어 감성의 주방용품과 홈 패브릭 상품에 아낌없이 투자하는 정가 지불형 VIP 고객입니다."
     },
     "C009612": {
       "id": "C009612",
@@ -7218,7 +7278,9 @@ const CLUSTER_DATA = {
           "총구매금액": 3300,
           "점포명": "온라인몰"
         }
-      ]
+      ],
+      "persona_name": "윤지원 (30대 짠테크족) (C009612)",
+      "persona_bio": "쿠폰 혜택이 없으면 결제를 망설이며, 장바구니에 담아두고 타임세일 알림을 기다렸다가 구매하는 가격 민감형 소비자입니다."
     },
     "C002362": {
       "id": "C002362",
@@ -7308,7 +7370,9 @@ const CLUSTER_DATA = {
           "총구매금액": 51500,
           "점포명": "온라인몰"
         }
-      ]
+      ],
+      "persona_name": "강민서 (20대 알뜰 대학원생) (C002362)",
+      "persona_bio": "장마트 앱의 특가 알림이 뜰 때만 접속하며, 1+1 행사 및 쿠폰 할인율 30% 이상 품목만 쏙쏙 골라 담는 대표적인 체리피커입니다."
     },
     "C007777": {
       "id": "C007777",
@@ -7398,7 +7462,9 @@ const CLUSTER_DATA = {
           "총구매금액": 394600,
           "점포명": "온라인몰"
         }
-      ]
+      ],
+      "persona_name": "윤지원 (30대 짠테크족) (C007777)",
+      "persona_bio": "쿠폰 혜택이 없으면 결제를 망설이며, 장바구니에 담아두고 타임세일 알림을 기다렸다가 구매하는 가격 민감형 소비자입니다."
     },
     "C002676": {
       "id": "C002676",
@@ -7488,7 +7554,9 @@ const CLUSTER_DATA = {
           "총구매금액": 15400,
           "점포명": "온라인몰"
         }
-      ]
+      ],
+      "persona_name": "임하은 (40대 알뜰 쇼퍼) (C002676)",
+      "persona_bio": "카드사 청구할인과 중복 쿠폰이 가능한 결제일에만 주문하는 프로모션 반응률 100% 고객입니다."
     },
     "C004257": {
       "id": "C004257",
@@ -7578,7 +7646,9 @@ const CLUSTER_DATA = {
           "총구매금액": 9500,
           "점포명": "온라인몰"
         }
-      ]
+      ],
+      "persona_name": "윤지원 (30대 짠테크족) (C004257)",
+      "persona_bio": "쿠폰 혜택이 없으면 결제를 망설이며, 장바구니에 담아두고 타임세일 알림을 기다렸다가 구매하는 가격 민감형 소비자입니다."
     },
     "C005923": {
       "id": "C005923",
@@ -7668,7 +7738,9 @@ const CLUSTER_DATA = {
           "총구매금액": 16700,
           "점포명": "온라인몰"
         }
-      ]
+      ],
+      "persona_name": "강민서 (20대 알뜰 대학원생) (C005923)",
+      "persona_bio": "장마트 앱의 특가 알림이 뜰 때만 접속하며, 1+1 행사 및 쿠폰 할인율 30% 이상 품목만 쏙쏙 골라 담는 대표적인 체리피커입니다."
     },
     "C000786": {
       "id": "C000786",
@@ -7734,7 +7806,9 @@ const CLUSTER_DATA = {
           "총구매금액": 6900,
           "점포명": "온라인몰"
         }
-      ]
+      ],
+      "persona_name": "강민서 (20대 알뜰 대학원생) (C000786)",
+      "persona_bio": "장마트 앱의 특가 알림이 뜰 때만 접속하며, 1+1 행사 및 쿠폰 할인율 30% 이상 품목만 쏙쏙 골라 담는 대표적인 체리피커입니다."
     },
     "C003676": {
       "id": "C003676",
@@ -7808,7 +7882,9 @@ const CLUSTER_DATA = {
           "총구매금액": 5700,
           "점포명": "온라인몰"
         }
-      ]
+      ],
+      "persona_name": "임하은 (40대 알뜰 쇼퍼) (C003676)",
+      "persona_bio": "카드사 청구할인과 중복 쿠폰이 가능한 결제일에만 주문하는 프로모션 반응률 100% 고객입니다."
     },
     "C006271": {
       "id": "C006271",
@@ -7898,7 +7974,9 @@ const CLUSTER_DATA = {
           "총구매금액": 25400,
           "점포명": "온라인몰"
         }
-      ]
+      ],
+      "persona_name": "윤지원 (30대 짠테크족) (C006271)",
+      "persona_bio": "쿠폰 혜택이 없으면 결제를 망설이며, 장바구니에 담아두고 타임세일 알림을 기다렸다가 구매하는 가격 민감형 소비자입니다."
     },
     "C008485": {
       "id": "C008485",
@@ -7988,7 +8066,9 @@ const CLUSTER_DATA = {
           "총구매금액": 610200,
           "점포명": "온라인몰"
         }
-      ]
+      ],
+      "persona_name": "윤지원 (30대 짠테크족) (C008485)",
+      "persona_bio": "쿠폰 혜택이 없으면 결제를 망설이며, 장바구니에 담아두고 타임세일 알림을 기다렸다가 구매하는 가격 민감형 소비자입니다."
     },
     "C005124": {
       "id": "C005124",
@@ -8078,7 +8158,9 @@ const CLUSTER_DATA = {
           "총구매금액": 49700,
           "점포명": "온라인몰"
         }
-      ]
+      ],
+      "persona_name": "윤지원 (30대 짠테크족) (C005124)",
+      "persona_bio": "쿠폰 혜택이 없으면 결제를 망설이며, 장바구니에 담아두고 타임세일 알림을 기다렸다가 구매하는 가격 민감형 소비자입니다."
     },
     "C002071": {
       "id": "C002071",
@@ -8168,7 +8250,9 @@ const CLUSTER_DATA = {
           "총구매금액": 16800,
           "점포명": "온라인몰"
         }
-      ]
+      ],
+      "persona_name": "강민서 (20대 알뜰 대학원생) (C002071)",
+      "persona_bio": "장마트 앱의 특가 알림이 뜰 때만 접속하며, 1+1 행사 및 쿠폰 할인율 30% 이상 품목만 쏙쏙 골라 담는 대표적인 체리피커입니다."
     },
     "C000400": {
       "id": "C000400",
@@ -8258,7 +8342,9 @@ const CLUSTER_DATA = {
           "총구매금액": 38600,
           "점포명": "온라인몰"
         }
-      ]
+      ],
+      "persona_name": "강민서 (20대 알뜰 대학원생) (C000400)",
+      "persona_bio": "장마트 앱의 특가 알림이 뜰 때만 접속하며, 1+1 행사 및 쿠폰 할인율 30% 이상 품목만 쏙쏙 골라 담는 대표적인 체리피커입니다."
     },
     "C006655": {
       "id": "C006655",
@@ -8332,7 +8418,9 @@ const CLUSTER_DATA = {
           "총구매금액": 5800,
           "점포명": "잠실점"
         }
-      ]
+      ],
+      "persona_name": "윤지원 (30대 짠테크족) (C006655)",
+      "persona_bio": "쿠폰 혜택이 없으면 결제를 망설이며, 장바구니에 담아두고 타임세일 알림을 기다렸다가 구매하는 가격 민감형 소비자입니다."
     },
     "C006868": {
       "id": "C006868",
@@ -8414,7 +8502,9 @@ const CLUSTER_DATA = {
           "총구매금액": 43400,
           "점포명": "온라인몰"
         }
-      ]
+      ],
+      "persona_name": "강민서 (20대 알뜰 대학원생) (C006868)",
+      "persona_bio": "장마트 앱의 특가 알림이 뜰 때만 접속하며, 1+1 행사 및 쿠폰 할인율 30% 이상 품목만 쏙쏙 골라 담는 대표적인 체리피커입니다."
     },
     "C008612": {
       "id": "C008612",
@@ -8448,7 +8538,9 @@ const CLUSTER_DATA = {
           "총구매금액": 12000,
           "점포명": "온라인몰"
         }
-      ]
+      ],
+      "persona_name": "오현우 (30대 단발성 방문자) (C008612)",
+      "persona_bio": "연초 설 명절 선물세트 구매를 위해 한 번 방문한 뒤, 최근 수개월간 재방문이 없는 이탈 직전의 고객입니다."
     },
     "C006191": {
       "id": "C006191",
@@ -8466,7 +8558,9 @@ const CLUSTER_DATA = {
           "총구매금액": 136600,
           "점포명": "온라인몰"
         }
-      ]
+      ],
+      "persona_name": "송태양 (20대 신규 유입자) (C006191)",
+      "persona_bio": "신규 회원가입 웰컴 쿠폰으로 1회 결제 후 앱을 사용하지 않고 있어 리액티베이션이 시급한 휴면 위험 고객입니다."
     },
     "C001264": {
       "id": "C001264",
@@ -8492,7 +8586,9 @@ const CLUSTER_DATA = {
           "총구매금액": 72100,
           "점포명": "온라인몰"
         }
-      ]
+      ],
+      "persona_name": "오현우 (30대 단발성 방문자) (C001264)",
+      "persona_bio": "연초 설 명절 선물세트 구매를 위해 한 번 방문한 뒤, 최근 수개월간 재방문이 없는 이탈 직전의 고객입니다."
     },
     "C005720": {
       "id": "C005720",
@@ -8526,7 +8622,9 @@ const CLUSTER_DATA = {
           "총구매금액": 32600,
           "점포명": "서울역점"
         }
-      ]
+      ],
+      "persona_name": "송태양 (20대 신규 유입자) (C005720)",
+      "persona_bio": "신규 회원가입 웰컴 쿠폰으로 1회 결제 후 앱을 사용하지 않고 있어 리액티베이션이 시급한 휴면 위험 고객입니다."
     },
     "C000311": {
       "id": "C000311",
@@ -8552,7 +8650,9 @@ const CLUSTER_DATA = {
           "총구매금액": 126400,
           "점포명": "왕십리점"
         }
-      ]
+      ],
+      "persona_name": "송태양 (20대 신규 유입자) (C000311)",
+      "persona_bio": "신규 회원가입 웰컴 쿠폰으로 1회 결제 후 앱을 사용하지 않고 있어 리액티베이션이 시급한 휴면 위험 고객입니다."
     },
     "C001370": {
       "id": "C001370",
@@ -8586,7 +8686,9 @@ const CLUSTER_DATA = {
           "총구매금액": 117300,
           "점포명": "잠실점"
         }
-      ]
+      ],
+      "persona_name": "배유나 (40대 타 매장 이탈자) (C001370)",
+      "persona_bio": "과거 1~2회 장을 보았으나 최근 경쟁 마트 온라인 배송으로 이탈한 것으로 추정되는 회수 대상 고객입니다."
     },
     "C009380": {
       "id": "C009380",
@@ -8628,7 +8730,9 @@ const CLUSTER_DATA = {
           "총구매금액": 7400,
           "점포명": "수원점"
         }
-      ]
+      ],
+      "persona_name": "송태양 (20대 신규 유입자) (C009380)",
+      "persona_bio": "신규 회원가입 웰컴 쿠폰으로 1회 결제 후 앱을 사용하지 않고 있어 리액티베이션이 시급한 휴면 위험 고객입니다."
     },
     "C003124": {
       "id": "C003124",
@@ -8662,7 +8766,9 @@ const CLUSTER_DATA = {
           "총구매금액": 17400,
           "점포명": "왕십리점"
         }
-      ]
+      ],
+      "persona_name": "오현우 (30대 단발성 방문자) (C003124)",
+      "persona_bio": "연초 설 명절 선물세트 구매를 위해 한 번 방문한 뒤, 최근 수개월간 재방문이 없는 이탈 직전의 고객입니다."
     },
     "C007724": {
       "id": "C007724",
@@ -8688,7 +8794,9 @@ const CLUSTER_DATA = {
           "총구매금액": 123300,
           "점포명": "영등포점"
         }
-      ]
+      ],
+      "persona_name": "배유나 (40대 타 매장 이탈자) (C007724)",
+      "persona_bio": "과거 1~2회 장을 보았으나 최근 경쟁 마트 온라인 배송으로 이탈한 것으로 추정되는 회수 대상 고객입니다."
     },
     "C005610": {
       "id": "C005610",
@@ -8714,7 +8822,9 @@ const CLUSTER_DATA = {
           "총구매금액": 117500,
           "점포명": "영등포점"
         }
-      ]
+      ],
+      "persona_name": "송태양 (20대 신규 유입자) (C005610)",
+      "persona_bio": "신규 회원가입 웰컴 쿠폰으로 1회 결제 후 앱을 사용하지 않고 있어 리액티베이션이 시급한 휴면 위험 고객입니다."
     },
     "C005219": {
       "id": "C005219",
@@ -8732,7 +8842,9 @@ const CLUSTER_DATA = {
           "총구매금액": 126900,
           "점포명": "강남점"
         }
-      ]
+      ],
+      "persona_name": "배유나 (40대 타 매장 이탈자) (C005219)",
+      "persona_bio": "과거 1~2회 장을 보았으나 최근 경쟁 마트 온라인 배송으로 이탈한 것으로 추정되는 회수 대상 고객입니다."
     },
     "C008838": {
       "id": "C008838",
@@ -8766,7 +8878,9 @@ const CLUSTER_DATA = {
           "총구매금액": 16800,
           "점포명": "잠실점"
         }
-      ]
+      ],
+      "persona_name": "오현우 (30대 단발성 방문자) (C008838)",
+      "persona_bio": "연초 설 명절 선물세트 구매를 위해 한 번 방문한 뒤, 최근 수개월간 재방문이 없는 이탈 직전의 고객입니다."
     },
     "C009738": {
       "id": "C009738",
@@ -8792,7 +8906,9 @@ const CLUSTER_DATA = {
           "총구매금액": 92000,
           "점포명": "온라인몰"
         }
-      ]
+      ],
+      "persona_name": "송태양 (20대 신규 유입자) (C009738)",
+      "persona_bio": "신규 회원가입 웰컴 쿠폰으로 1회 결제 후 앱을 사용하지 않고 있어 리액티베이션이 시급한 휴면 위험 고객입니다."
     },
     "C007919": {
       "id": "C007919",
@@ -8826,7 +8942,9 @@ const CLUSTER_DATA = {
           "총구매금액": 41600,
           "점포명": "왕십리점"
         }
-      ]
+      ],
+      "persona_name": "오현우 (30대 단발성 방문자) (C007919)",
+      "persona_bio": "연초 설 명절 선물세트 구매를 위해 한 번 방문한 뒤, 최근 수개월간 재방문이 없는 이탈 직전의 고객입니다."
     },
     "C002937": {
       "id": "C002937",
@@ -8852,13 +8970,16 @@ const CLUSTER_DATA = {
           "총구매금액": 84900,
           "점포명": "서울역점"
         }
-      ]
+      ],
+      "persona_name": "배유나 (40대 타 매장 이탈자) (C002937)",
+      "persona_bio": "과거 1~2회 장을 보았으나 최근 경쟁 마트 온라인 배송으로 이탈한 것으로 추정되는 회수 대상 고객입니다."
     }
   }
 };
 
 let activeView = 'overview';
 let activeClusterId = 'cherrypicker';
+let isLightMode = false;
 
 // Chart instances
 let ovMonthlyChart = null;
@@ -8875,6 +8996,44 @@ document.addEventListener('DOMContentLoaded', () => {
   initSimulatorView();
   initKeyboardShortcuts();
 });
+
+function toggleTheme() {
+  isLightMode = !isLightMode;
+  document.body.classList.toggle('light-mode', isLightMode);
+
+  const themeIcon = document.getElementById('theme-icon');
+  const themeText = document.getElementById('theme-text');
+
+  if (isLightMode) {
+    themeIcon.textContent = '🌙';
+    themeText.textContent = '다크 모드';
+  } else {
+    themeIcon.textContent = '☀️';
+    themeText.textContent = '라이트 모드';
+  }
+
+  // Update chart fonts and grid lines if charts exist
+  updateChartsTheme();
+}
+
+function updateChartsTheme() {
+  const textColor = isLightMode ? '#475569' : '#94a3b8';
+  const gridColor = isLightMode ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.04)';
+
+  [ovMonthlyChart, ovStoreChart, ovPaymentChart, ovDowChart, clusterScatterChart, clusterCategoryBarChart].forEach(ch => {
+    if (!ch) return;
+    if (ch.options.scales) {
+      Object.values(ch.options.scales).forEach(scale => {
+        if (scale.ticks) scale.ticks.color = textColor;
+        if (scale.grid) scale.grid.color = gridColor;
+      });
+    }
+    if (ch.options.plugins && ch.options.plugins.legend && ch.options.plugins.legend.labels) {
+      ch.options.plugins.legend.labels.color = textColor;
+    }
+    ch.update();
+  });
+}
 
 function switchView(viewName) {
   activeView = viewName;
@@ -8903,6 +9062,7 @@ function initKeyboardShortcuts() {
     else if (e.key === '2') switchView('cluster');
     else if (e.key === '3') switchView('simulator');
     else if (e.key === 'f' || e.key === 'F') toggleFullScreen();
+    else if (e.key === 't' || e.key === 'T') toggleTheme();
     else if (e.key === 'ArrowRight') {
       if (activeView === 'overview') switchView('cluster');
       else if (activeView === 'cluster') switchView('simulator');
@@ -9167,24 +9327,24 @@ function renderClusterScatter() {
       plugins: {
         legend: {
           position: 'top',
-          labels: { color: '#94a3b8', font: { size: 10 }, boxWidth: 10 }
+          labels: { color: isLightMode ? '#475569' : '#94a3b8', font: { size: 10 }, boxWidth: 10 }
         },
         tooltip: {
           callbacks: {
-            label: ctx => ` 고객:${ctx.raw.cid} | 할인율:${ctx.raw.x}% | 연간매출:${ctx.raw.y.toFixed(1)}만원 (클릭시 상세)`
+            label: ctx => ` 고객:${ctx.raw.cid} | 할인율:${ctx.raw.x}% | 연간매출:${ctx.raw.y.toFixed(1)}만원 (클릭시 페르소나 상세)`
           }
         }
       },
       scales: {
         x: {
           title: { display: true, text: '고객 평균 할인율 (%)', color: '#94a3b8', font: { size: 11 } },
-          grid: { color: 'rgba(255,255,255,0.04)' },
-          ticks: { color: '#94a3b8' }
+          grid: { color: isLightMode ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.04)' },
+          ticks: { color: isLightMode ? '#475569' : '#94a3b8' }
         },
         y: {
           title: { display: true, text: '연간 총 결제액 (만원)', color: '#94a3b8', font: { size: 11 } },
-          grid: { color: 'rgba(255,255,255,0.04)' },
-          ticks: { color: '#94a3b8' }
+          grid: { color: isLightMode ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.04)' },
+          ticks: { color: isLightMode ? '#475569' : '#94a3b8' }
         }
       }
     }
@@ -9233,8 +9393,8 @@ function updateClusterCategoryChart(categorySales, color) {
         maintainAspectRatio: false,
         plugins: { legend: { display: false } },
         scales: {
-          x: { grid: { display: false }, ticks: { color: '#94a3b8', font: { size: 9 } } },
-          y: { grid: { color: 'rgba(255,255,255,0.03)' }, ticks: { color: '#94a3b8', font: { size: 9 }, callback: v => v + '천만' } }
+          x: { grid: { display: false }, ticks: { color: isLightMode ? '#475569' : '#94a3b8', font: { size: 9 } } },
+          y: { grid: { color: isLightMode ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.03)' }, ticks: { color: isLightMode ? '#475569' : '#94a3b8', font: { size: 9 }, callback: v => v + '천만' } }
         }
       }
     });
@@ -9254,17 +9414,13 @@ function runMarginSimulation() {
   document.getElementById('val-cherry-rate').textContent = `${cherryRate}%`;
   document.getElementById('val-loyal-rate').textContent = `+${loyalBoost}%`;
 
-  // Cherrypicker baseline: 1,938 customers, gross total ~ 395M won, current discount ~ 32.2% (127M)
-  // Saved cost = gross * (32.2 - cherryRate)%
   const cherryGross = 395000000;
   const deltaRate = (32.2 - cherryRate) / 100;
   const savedCost = Math.round(cherryGross * deltaRate);
 
-  // Loyal baseline: 2,882 customers, net sales 1.4B won, +loyalBoost% sales increase
   const loyalNet = 1399000000;
   const loyalSalesBoost = Math.round(loyalNet * (loyalBoost / 100));
 
-  // Net Profit effect = savedCost + (loyalSalesBoost * 0.25 margin rate)
   const netProfit = Math.round(savedCost + (loyalSalesBoost * 0.25));
 
   document.getElementById('res-saved-cost').textContent = `${savedCost >= 0 ? '+' : ''}${(savedCost / 10000000).toFixed(1)}천만원`;
@@ -9294,18 +9450,20 @@ function renderBasketRules() {
   });
 }
 
-// ----------------- MODAL DRILLDOWN -----------------
+// ----------------- PERSONA MODAL DRILLDOWN -----------------
 function openCustomerModal(customerId) {
   const modal = document.getElementById('cust-modal');
   const sample = CLUSTER_DATA.customer_samples[customerId];
   if (!sample) {
-    alert(`고객 ${customerId}의 상세 내역을 불러왔습니다.`);
+    alert(`고객 ${customerId}의 상세 프로필을 준비 중입니다.`);
     return;
   }
 
   const clusterNames = { 0: '로열 충성 고객군 (VIP)', 2: '고단가 프리미엄 고객군', 3: '체리피커 할인민감 고객군', 1: '이탈 위험 고객군' };
 
-  document.getElementById('modal-cust-id').textContent = `고객 ID: ${sample.id}`;
+  document.getElementById('modal-cust-raw-id').textContent = sample.id;
+  document.getElementById('modal-cust-name').textContent = sample.persona_name || `${sample.id} 고객`;
+  document.getElementById('modal-cust-bio').textContent = sample.persona_bio || '장마트를 주기적으로 이용하는 회원입니다.';
   document.getElementById('modal-cust-cluster').textContent = clusterNames[sample.cluster_code];
 
   const stats = document.getElementById('modal-cust-stats');

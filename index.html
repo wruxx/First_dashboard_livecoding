@@ -11,7 +11,7 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="dark-mode">
   <div class="deck-container">
     <!-- Top Header -->
     <header class="deck-header">
@@ -19,7 +19,7 @@
         <span class="brand-logo">🛒</span>
         <div>
           <h1 class="brand-title">JANG MART <span class="badge-live">EXECUTIVE SUITE</span></h1>
-          <p class="brand-desc">2025 연간 결산(90,681건) · K-Means 머신러닝 · What-If 시뮬레이터</p>
+          <p class="brand-desc">2025 연간 결산(90,681건) · K-Means 고객 세그멘테이션 · What-If 시뮬레이터</p>
         </div>
       </div>
 
@@ -37,16 +37,23 @@
         </button>
       </div>
 
-      <!-- Presentation Controls -->
+      <!-- Presentation Controls (Theme Toggle, Print, Fullscreen) -->
       <div class="header-right-tools">
-        <button class="tool-btn" id="fullscreen-btn" onclick="toggleFullScreen()" title="전체화면 (F)">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+        <!-- Theme Toggle Button -->
+        <button class="tool-btn" id="theme-toggle-btn" onclick="toggleTheme()" title="라이트/다크 테마 전환">
+          <span id="theme-icon">☀️</span>
+          <span id="theme-text">라이트 모드</span>
+        </button>
+        <!-- Print / PDF Button -->
+        <button class="tool-btn" onclick="window.print()" title="보고서 인쇄 및 PDF 저장 (Ctrl+P)">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+          PDF 인쇄
+        </button>
+        <!-- Fullscreen Button -->
+        <button class="tool-btn" id="fullscreen-btn" onclick="toggleFullScreen()" title="전체화면 토글 (F)">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
           전체화면 [F]
         </button>
-        <div class="live-pill">
-          <span class="status-dot"></span>
-          <span>키보드 1, 2, 3 지원</span>
-        </div>
       </div>
     </header>
 
@@ -171,7 +178,7 @@
           <div class="card-head">
             <div>
               <h3 class="card-tit">군집별 고객 분포 & 할인민감도 스캐터 (K-Means)</h3>
-              <p class="card-sub">점 클릭 시 해당 고객의 과거 구매 타임라인이 모달로 열립니다.</p>
+              <p class="card-sub">점 클릭 시 해당 가상 고객의 스토리텔링 프로필 및 구매 타임라인이 열립니다.</p>
             </div>
             <span class="head-tag" id="selected-cluster-badge">전체 군집 비교</span>
           </div>
@@ -299,13 +306,17 @@
       </section>
     </main>
 
-    <!-- Customer Timeline Detail Modal -->
+    <!-- Customer Persona Detail Modal -->
     <div class="modal-overlay" id="cust-modal" onclick="closeCustomerModal(event)">
       <div class="modal-box" onclick="event.stopPropagation()">
         <div class="modal-head">
           <div>
-            <h3 class="modal-tit" id="modal-cust-id">고객 상세 프로필: C000000</h3>
-            <span class="modal-badge" id="modal-cust-cluster">로열 충성 고객</span>
+            <div class="persona-tag-line">
+              <span class="modal-badge" id="modal-cust-cluster">로열 충성 고객</span>
+              <span class="persona-id-pill" id="modal-cust-raw-id">C000000</span>
+            </div>
+            <h3 class="modal-tit" id="modal-cust-name">김철수 (40대 자영업)</h3>
+            <p class="persona-bio" id="modal-cust-bio">고객 페르소나 설명</p>
           </div>
           <button class="modal-close" onclick="closeCustomerModal()">✕</button>
         </div>
@@ -323,9 +334,9 @@
 
     <!-- Footer -->
     <footer class="deck-footer">
-      <span>장마트(JANG MART) 2025 임원 보고용 대시보드 v2.0</span>
-      <span>키보드 단축키: [1] 총괄 [2] 클러스터 [3] 시뮬레이터 [F] 전체화면</span>
-      <span>GitHub Pages 자동 배포 연동</span>
+      <span>장마트(JANG MART) 2025 임원 보고용 대시보드 v2.1</span>
+      <span>단축키: [1] 총괄 [2] 클러스터 [3] 시뮬레이터 [F] 전체화면 [T] 테마전환</span>
+      <span>GitHub Pages 배포 연동 완료</span>
     </footer>
   </div>
 
