@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>장마트 2025 경영 실적 & 할인민감도 클러스터링 대시보드</title>
+  <title>장마트 2025 경영 실적 & 할인민감도 K-Means 대시보드</title>
   <!-- Google Fonts & Chart.js -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,38 +13,46 @@
 </head>
 <body>
   <div class="deck-container">
-    <!-- Top Compact Header -->
+    <!-- Top Header -->
     <header class="deck-header">
       <div class="brand-box">
         <span class="brand-logo">🛒</span>
         <div>
-          <h1 class="brand-title">JANG MART <span class="badge-live">EXECUTIVE BOARD</span></h1>
-          <p class="brand-desc">2025 연간 결산(90,681건) 및 머신러닝(K-Means k=4) 고객 세그멘테이션</p>
+          <h1 class="brand-title">JANG MART <span class="badge-live">EXECUTIVE SUITE</span></h1>
+          <p class="brand-desc">2025 연간 결산(90,681건) · K-Means 머신러닝 · What-If 시뮬레이터</p>
         </div>
       </div>
 
-      <!-- Presentation View Toggle Tabs -->
+      <!-- Navigation Tabs -->
       <div class="view-switch">
         <button class="view-btn active" id="tab-overview" onclick="switchView('overview')">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-          1. 5대 핵심 실적 총괄
+          <span class="btn-num">[1]</span> 5대 핵심 실적 총괄
         </button>
         <button class="view-btn" id="tab-cluster" onclick="switchView('cluster')">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-          2. 🔥 할인민감도 K-Means 클러스터 심층분석
+          <span class="btn-num">[2]</span> 🔥 할인민감도 K-Means 군집분석
           <span class="hot-badge">핵심 과제</span>
+        </button>
+        <button class="view-btn" id="tab-simulator" onclick="switchView('simulator')">
+          <span class="btn-num">[3]</span> ⚡ What-If 마진 시뮬레이터 & 연관분석
         </button>
       </div>
 
-      <div class="header-status">
-        <span class="status-dot"></span>
-        <span>발표 모드 (한 화면 뷰)</span>
+      <!-- Presentation Controls -->
+      <div class="header-right-tools">
+        <button class="tool-btn" id="fullscreen-btn" onclick="toggleFullScreen()" title="전체화면 (F)">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+          전체화면 [F]
+        </button>
+        <div class="live-pill">
+          <span class="status-dot"></span>
+          <span>키보드 1, 2, 3 지원</span>
+        </div>
       </div>
     </header>
 
-    <!-- VIEW 1: 5대 핵심 실적 총괄 뷰 (1-Screen Presentation) -->
+    <!-- VIEW 1: 5대 핵심 실적 총괄 (1-Screen Presentation) -->
     <main id="view-overview" class="deck-main active">
-      <!-- Top 5 Compact KPI Strip -->
+      <!-- 5 Compact KPI Strip -->
       <section class="kpi-strip">
         <div class="kpi-box border-cyan">
           <span class="kpi-num-badge">KPI 1</span>
@@ -94,7 +102,6 @@
 
       <!-- 4-Grid Balanced Chart Presentation Area -->
       <section class="overview-chart-grid">
-        <!-- Chart 1: Monthly Trend -->
         <div class="deck-chart-card">
           <div class="card-head">
             <h3 class="card-tit">월별 순매출액 & 주문건수 추이</h3>
@@ -105,7 +112,6 @@
           </div>
         </div>
 
-        <!-- Chart 2: Store / Channel Bar -->
         <div class="deck-chart-card">
           <div class="card-head">
             <h3 class="card-tit">온라인몰 및 오프라인 8개점 매출 순위</h3>
@@ -116,7 +122,6 @@
           </div>
         </div>
 
-        <!-- Chart 3: Category Mix -->
         <div class="deck-chart-card">
           <div class="card-head">
             <h3 class="card-tit">10대 상품군 매출 믹스 (Category Mix)</h3>
@@ -127,7 +132,6 @@
           </div>
         </div>
 
-        <!-- Chart 4: Payment & Day Pattern -->
         <div class="deck-chart-card">
           <div class="card-head">
             <h3 class="card-tit">결제수단별 점유율 및 요일별 패턴</h3>
@@ -141,16 +145,15 @@
       </section>
     </main>
 
-    <!-- VIEW 2: 시급 분석 지표 - K-Means 할인민감도 클러스터링 뷰 -->
+    <!-- VIEW 2: K-Means 클러스터링 뷰 -->
     <main id="view-cluster" class="deck-main">
-      <!-- Urgent Metric Executive Summary Alert -->
       <section class="urgent-banner">
         <div class="urgent-icon">🚨</div>
         <div class="urgent-body">
           <div class="urgent-tit">발굴된 시급 분석 지표: <strong>「연간 할인 프로모션 7.4억 원 (할인율 19.7%)의 마진 잠식」</strong></div>
           <div class="urgent-desc">
-            전체 순매출 29.7억 원 중 무려 <strong>7.4억 원(정가의 약 20%)</strong>이 할인으로 지출되고 있습니다. 
-            모든 고객에게 일괄 할인 쿠폰을 뿌리는 대신, <strong>K-Means (k=4, 실루엣 점수 0.40)</strong> 머신러닝 군집화로 고객을 4대 유형으로 분할하여 타겟팅해야 마진을 즉시 15% 이상 개선할 수 있습니다.
+            전체 순매출 29.7억 원 중 <strong>7.4억 원(정가의 약 20%)</strong>이 할인으로 지출되고 있습니다. 
+            <strong>K-Means (k=4)</strong> 머신러닝 군집화로 고객을 4대 유형으로 분할하여 무차별 쿠폰 살포를 중단하고 타겟팅해야 마진을 즉시 개선할 수 있습니다.
           </div>
         </div>
         <div class="urgent-stat">
@@ -159,19 +162,16 @@
         </div>
       </section>
 
-      <!-- Cluster Interaction Strip (Selectable Filter Cards) -->
-      <section class="cluster-selector-strip" id="cluster-cards-container">
-        <!-- Dynamically injected cluster buttons -->
-      </section>
+      <!-- Cluster Selector Cards -->
+      <section class="cluster-selector-strip" id="cluster-cards-container"></section>
 
-      <!-- Cluster Detailed Analytics Area -->
+      <!-- Analytics Area -->
       <section class="cluster-analytics-grid">
-        <!-- Left: Scatter / Profile Distribution -->
         <div class="deck-chart-card flex-1">
           <div class="card-head">
             <div>
-              <h3 class="card-tit" id="cluster-chart-tit">군집별 고객 분포 & 할인민감도 스캐터 (K-Means)</h3>
-              <p class="card-sub" id="cluster-chart-sub">X축: 평균할인율(%) vs Y축: 1인당 총구매금액(원)</p>
+              <h3 class="card-tit">군집별 고객 분포 & 할인민감도 스캐터 (K-Means)</h3>
+              <p class="card-sub">점 클릭 시 해당 고객의 과거 구매 타임라인이 모달로 열립니다.</p>
             </div>
             <span class="head-tag" id="selected-cluster-badge">전체 군집 비교</span>
           </div>
@@ -180,48 +180,32 @@
           </div>
         </div>
 
-        <!-- Right: Actionable Strategy & Dynamic Comparison Chart -->
         <div class="deck-chart-card flex-1">
           <div class="card-head">
             <div>
-              <h3 class="card-tit" id="cluster-action-tit">선택 군집 특성 및 데이터 기반 실행 전략 (Action Plan)</h3>
-              <p class="card-sub">상호작용 클릭 시 해당 군집의 상품 선호도 및 매출 추이가 동적으로 연동됩니다.</p>
+              <h3 class="card-tit">선택 군집 특성 및 데이터 기반 실행 전략 (Action Plan)</h3>
+              <p class="card-sub">군집 카드를 클릭하면 상세 프로필과 카테고리 선호도가 즉시 갱신됩니다.</p>
             </div>
           </div>
           
           <div class="cluster-action-panel">
             <div class="action-card" id="cluster-detail-box">
               <div class="action-top">
-                <span class="action-name" id="action-name">전체 10,000명 고객 통합 뷰</span>
-                <span class="action-badge" id="action-badge">Overview</span>
+                <span class="action-name" id="action-name">로딩 중...</span>
+                <span class="action-badge" id="action-badge">Segment</span>
               </div>
-              <p class="action-desc" id="action-desc">위 4개 클러스터 카드를 클릭하면 군집별 상세 프로필과 즉시 실행 가능한 마케팅 전략이 표시됩니다.</p>
+              <p class="action-desc" id="action-desc"></p>
               
               <div class="action-metrics-row">
-                <div class="action-m-box">
-                  <span class="m-lbl">고객 수</span>
-                  <span class="m-val" id="m-count">10,000명</span>
-                </div>
-                <div class="action-m-box">
-                  <span class="m-lbl">평균 할인율</span>
-                  <span class="m-val" id="m-disc">19.7%</span>
-                </div>
-                <div class="action-m-box">
-                  <span class="m-lbl">1인당 평균매출</span>
-                  <span class="m-val" id="m-spend">29.7만원</span>
-                </div>
-                <div class="action-m-box">
-                  <span class="m-lbl">평균 결제건수</span>
-                  <span class="m-val" id="m-freq">6.0회</span>
-                </div>
+                <div class="action-m-box"><span class="m-lbl">고객 수</span><span class="m-val" id="m-count">-</span></div>
+                <div class="action-m-box"><span class="m-lbl">평균 할인율</span><span class="m-val" id="m-disc">-</span></div>
+                <div class="action-m-box"><span class="m-lbl">1인당 평균매출</span><span class="m-val" id="m-spend">-</span></div>
+                <div class="action-m-box"><span class="m-lbl">평균 결제건수</span><span class="m-val" id="m-freq">-</span></div>
               </div>
 
-              <div class="strategy-banner" id="strategy-banner">
-                <strong>🎯 추천 액션:</strong> 상단 군집 카드 중 <strong>「체리피커 할인민감 고객군」</strong>을 클릭하여 마진 방어 전략을 확인하세요.
-              </div>
+              <div class="strategy-banner" id="strategy-banner"></div>
             </div>
 
-            <!-- Dynamic Category Breakdown Chart for Selected Cluster -->
             <div class="cluster-subchart-box">
               <h4 class="subchart-tit">선택 군집의 상품군별 매출 선호도 (Dynamic)</h4>
               <div class="subchart-wrapper">
@@ -233,11 +217,115 @@
       </section>
     </main>
 
-    <!-- Compact Footer -->
+    <!-- VIEW 3: What-If 시뮬레이터 & 장바구니 연관분석 뷰 -->
+    <main id="view-simulator" class="deck-main">
+      <section class="simulator-layout-grid">
+        <!-- Left: What-If Margin Simulator Widget -->
+        <div class="deck-chart-card flex-1">
+          <div class="card-head">
+            <div>
+              <h3 class="card-tit">⚡ What-If 프로모션 마진 시뮬레이터</h3>
+              <p class="card-sub">할인율 정책 조정 시 예상되는 비용 절감액과 영업이익 변화를 실시간 시뮬레이션합니다.</p>
+            </div>
+            <span class="badge-accent">Decision Support</span>
+          </div>
+
+          <div class="sim-panel">
+            <div class="sim-control-group">
+              <div class="sim-control-head">
+                <label for="slider-cherry">⚠️ 체리피커 군집 목표 할인율 제한</label>
+                <span class="sim-control-val text-amber" id="val-cherry-rate">22%</span>
+              </div>
+              <input type="range" id="slider-cherry" min="15" max="35" value="22" step="1" oninput="runMarginSimulation()">
+              <div class="sim-range-labels">
+                <span>15% (강력한 허들)</span>
+                <span>현재 평균 (32.2%)</span>
+                <span>35% (무차별 할인)</span>
+              </div>
+            </div>
+
+            <div class="sim-control-group">
+              <div class="sim-control-head">
+                <label for="slider-loyal">💎 로열 VIP 고객 전용 리텐션 혜택 강화</label>
+                <span class="sim-control-val text-cyan" id="val-loyal-rate">+3%</span>
+              </div>
+              <input type="range" id="slider-loyal" min="0" max="6" value="3" step="0.5" oninput="runMarginSimulation()">
+              <div class="sim-range-labels">
+                <span>0% (추가혜택 없음)</span>
+                <span>+3% (VIP 락인 권장)</span>
+                <span>+6% (공격적 마케팅)</span>
+              </div>
+            </div>
+
+            <!-- Simulation KPI Output Cards -->
+            <div class="sim-result-grid">
+              <div class="sim-stat-card border-green">
+                <span class="sim-stat-lbl">연간 프로모션 예산 절감</span>
+                <span class="sim-stat-val text-emerald" id="res-saved-cost">+7,420만원</span>
+                <span class="sim-stat-hint">체리피커 불필요 할인 차단</span>
+              </div>
+              <div class="sim-stat-card border-blue">
+                <span class="sim-stat-lbl">VIP 리텐션 기대 매출 효과</span>
+                <span class="sim-stat-val text-cyan" id="res-loyal-boost">+4,200만원</span>
+                <span class="sim-stat-hint">이탈 방지 및 객단가 업셀링</span>
+              </div>
+              <div class="sim-stat-card border-gold highlight-gold">
+                <span class="sim-stat-lbl">🌟 최종 연간 순이익 개선 예상</span>
+                <span class="sim-stat-val text-gold" id="res-net-profit">+1억 1,620만원</span>
+                <span class="sim-stat-hint">영업이익률 +3.9%p 상승 효과</span>
+              </div>
+            </div>
+
+            <div class="sim-action-summary">
+              <strong>💡 데이터 분석가 의사결정 권고:</strong> 체리피커 군집에 '5만 원 이상 결제 시 쿠폰 적용' 조건을 부여하여 평균 할인율을 22%로 통제하고, 절감된 예산의 일부를 연간 48만 원 이상 구매하는 로열 VIP 군에 캐시백으로 리워드하는 것이 마진 극대화의 핵심입니다.
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Basket Cross-Selling Association Analysis -->
+        <div class="deck-chart-card flex-1">
+          <div class="card-head">
+            <div>
+              <h3 class="card-tit">🛒 장바구니 교차구매(Cross-selling) 연관분석</h3>
+              <p class="card-sub">거래 60,079건의 동시구매 지지도(Support) 상위 조합 TOP 8</p>
+            </div>
+            <span class="head-tag">Apriori Analysis</span>
+          </div>
+
+          <div class="basket-rules-container" id="basket-rules-list">
+            <!-- Dynamically populated basket association cards -->
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Customer Timeline Detail Modal -->
+    <div class="modal-overlay" id="cust-modal" onclick="closeCustomerModal(event)">
+      <div class="modal-box" onclick="event.stopPropagation()">
+        <div class="modal-head">
+          <div>
+            <h3 class="modal-tit" id="modal-cust-id">고객 상세 프로필: C000000</h3>
+            <span class="modal-badge" id="modal-cust-cluster">로열 충성 고객</span>
+          </div>
+          <button class="modal-close" onclick="closeCustomerModal()">✕</button>
+        </div>
+        <div class="modal-stats" id="modal-cust-stats"></div>
+        <div class="modal-table-wrap">
+          <table class="modal-table">
+            <thead>
+              <tr><th>주문일자</th><th>상품군</th><th>상품명</th><th class="text-right">수량</th><th class="text-right">결제금액</th><th>점포</th></tr>
+            </thead>
+            <tbody id="modal-cust-history"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
     <footer class="deck-footer">
-      <span>장마트(JANG MART) 2025 임원 보고용 대시보드</span>
-      <span>K-Means 클러스터링 알고리즘 (Scikit-Learn 기반 k=4 분할)</span>
-      <span>GitHub Pages 배포 연동 완료</span>
+      <span>장마트(JANG MART) 2025 임원 보고용 대시보드 v2.0</span>
+      <span>키보드 단축키: [1] 총괄 [2] 클러스터 [3] 시뮬레이터 [F] 전체화면</span>
+      <span>GitHub Pages 자동 배포 연동</span>
     </footer>
   </div>
 
