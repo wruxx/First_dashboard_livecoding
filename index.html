@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>장마트(JANG MART) 2025 경영 실적 모니터링 대시보드</title>
+  <!-- Google Fonts & Chart.js -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="dashboard-header">
+      <div class="header-left">
+        <div class="logo-badge">
+          <span class="logo-icon">🛒</span>
+          <div class="logo-text">
+            <span class="brand-title">JANG MART</span>
+            <span class="brand-sub">Executive Performance Monitoring</span>
+          </div>
+        </div>
+        <div class="live-pill">
+          <span class="live-dot"></span>
+          <span>2025 연간 결산 완결 데이터</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <div class="filter-group">
+          <button class="filter-btn active" data-filter="all">전체 채널</button>
+          <button class="filter-btn" data-filter="offline">오프라인 매장</button>
+          <button class="filter-btn" data-filter="online">온라인몰</button>
+        </div>
+        <button id="refresh-btn" class="icon-btn" title="새로고침">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Top 5 Core KPI Cards -->
+    <section class="kpi-grid">
+      <!-- KPI 1 -->
+      <div class="kpi-card highlight-cyan">
+        <div class="kpi-top">
+          <span class="kpi-badge">KPI 1 · 총 매출 성과</span>
+          <span class="kpi-icon">💰</span>
+        </div>
+        <div class="kpi-body">
+          <div class="kpi-label">연간 순매출액 (Net Sales)</div>
+          <div class="kpi-value" id="kpi-net-sales">29.71<span class="unit">억원</span></div>
+          <div class="kpi-subtext">총 30.15억원 중 반품 제외 (반품률 1.45%)</div>
+        </div>
+        <div class="kpi-footer">
+          <span class="tag positive">평균 할인율 19.7%</span>
+          <span class="hint">건전 마진 유지</span>
+        </div>
+      </div>
+
+      <!-- KPI 2 -->
+      <div class="kpi-card highlight-purple">
+        <div class="kpi-top">
+          <span class="kpi-badge">KPI 2 · 고객 객단가</span>
+          <span class="kpi-icon">🎯</span>
+        </div>
+        <div class="kpi-body">
+          <div class="kpi-label">1회 건당 결제액 (AOV)</div>
+          <div class="kpi-value" id="kpi-aov">49,451<span class="unit">원</span></div>
+          <div class="kpi-subtext">연간 1인당 구매액(ARPU) 297,100원</div>
+        </div>
+        <div class="kpi-footer">
+          <span class="tag neutral">연평균 6.01회 구매</span>
+          <span class="hint">10,000명 단골 락인</span>
+        </div>
+      </div>
+
+      <!-- KPI 3 -->
+      <div class="kpi-card highlight-blue">
+        <div class="kpi-top">
+          <span class="kpi-badge">KPI 3 · 옴니채널</span>
+          <span class="kpi-icon">🌐</span>
+        </div>
+        <div class="kpi-body">
+          <div class="kpi-label">온라인몰 단독 매출 비중</div>
+          <div class="kpi-value" id="kpi-online-share">39.4<span class="unit">%</span></div>
+          <div class="kpi-subtext">11억 7,183만원 (단일 1위 점포)</div>
+        </div>
+        <div class="kpi-footer">
+          <span class="tag blue">오프라인 8개점 60.6%</span>
+          <span class="hint">잠실·왕십리 강세</span>
+        </div>
+      </div>
+
+      <!-- KPI 4 -->
+      <div class="kpi-card highlight-emerald">
+        <div class="kpi-top">
+          <span class="kpi-badge">KPI 4 · 수익 견인</span>
+          <span class="kpi-icon">🏆</span>
+        </div>
+        <div class="kpi-body">
+          <div class="kpi-label">1위 카테고리 (소형가전)</div>
+          <div class="kpi-value" id="kpi-top-cat">7.32<span class="unit">억원</span></div>
+          <div class="kpi-subtext">전체 매출의 24.6% 압도적 1위</div>
+        </div>
+        <div class="kpi-footer">
+          <span class="tag emerald">침구홈 15.4% · 신선 10.6%</span>
+          <span class="hint">수익+트래픽 조화</span>
+        </div>
+      </div>
+
+      <!-- KPI 5 -->
+      <div class="kpi-card highlight-amber">
+        <div class="kpi-top">
+          <span class="kpi-badge">KPI 5 · 결제 트렌드</span>
+          <span class="kpi-icon">💳</span>
+        </div>
+        <div class="kpi-body">
+          <div class="kpi-label">디지털 간편결제(Pay) 비중</div>
+          <div class="kpi-value" id="kpi-pay-share">28.1<span class="unit">%</span></div>
+          <div class="kpi-subtext">총 25,476건 (신용카드 56.8%)</div>
+        </div>
+        <div class="kpi-footer">
+          <span class="tag amber">핀테크 락인 효과</span>
+          <span class="hint">체크카드 15.1%</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Visual Charts Section -->
+    <section class="charts-grid-row">
+      <!-- Chart 1: Monthly Sales & Order Trend -->
+      <div class="chart-card flex-2">
+        <div class="chart-header">
+          <div>
+            <h3 class="chart-title">월별 매출 추이 및 주문 트렌드</h3>
+            <p class="chart-desc">1월부터 12월까지 순매출액(막대)과 거래건수(라인)의 월별 성장 곡선</p>
+          </div>
+          <div class="chart-legend-custom">
+            <span class="dot-legend cyan"></span><span>순매출액(원)</span>
+            <span class="dot-legend purple"></span><span>주문건수(건)</span>
+          </div>
+        </div>
+        <div class="chart-wrapper">
+          <canvas id="monthlyTrendChart"></canvas>
+        </div>
+      </div>
+
+      <!-- Chart 2: Channel & Store Distribution -->
+      <div class="chart-card flex-1">
+        <div class="chart-header">
+          <div>
+            <h3 class="chart-title">채널 및 점포별 매출 기여도</h3>
+            <p class="chart-desc">온라인몰 및 오프라인 8개 거점 매장별 매출 순위</p>
+          </div>
+        </div>
+        <div class="chart-wrapper">
+          <canvas id="channelStoreChart"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <section class="charts-grid-row">
+      <!-- Chart 3: Category Breakdown -->
+      <div class="chart-card flex-1">
+        <div class="chart-header">
+          <div>
+            <h3 class="chart-title">10대 상품군별 매출 믹스 (Category Mix)</h3>
+            <p class="chart-desc">고단가 효자 품목(가전/침구)과 일상 트래픽 품목(식품)의 비중</p>
+          </div>
+        </div>
+        <div class="chart-wrapper">
+          <canvas id="categoryDonutChart"></canvas>
+        </div>
+      </div>
+
+      <!-- Chart 4: Payment Method Distribution -->
+      <div class="chart-card flex-1">
+        <div class="chart-header">
+          <div>
+            <h3 class="chart-title">결제수단별 거래 비중</h3>
+            <p class="chart-desc">신용카드, 간편결제, 체크카드의 거래건수 비교</p>
+          </div>
+        </div>
+        <div class="chart-wrapper">
+          <canvas id="paymentChart"></canvas>
+        </div>
+      </div>
+
+      <!-- Chart 5: Day of Week Pattern -->
+      <div class="chart-card flex-1">
+        <div class="chart-header">
+          <div>
+            <h3 class="chart-title">요일별 매출 패턴</h3>
+            <p class="chart-desc">주중 vs 주말 소비 탄력성</p>
+          </div>
+        </div>
+        <div class="chart-wrapper">
+          <canvas id="dowChart"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <!-- Top 10 Bestselling Products Table -->
+    <section class="table-section">
+      <div class="table-card">
+        <div class="table-header">
+          <div>
+            <h3 class="table-title">매출 기여 상위 TOP 10 베스트셀러 상품</h3>
+            <p class="table-desc">2025년 가장 높은 누적 결제액을 창출한 프리미엄 & 스테디셀러 품목</p>
+          </div>
+          <span class="badge-pill">SKU Leaderboard</span>
+        </div>
+        <div class="table-responsive">
+          <table class="custom-table" id="top-products-table">
+            <thead>
+              <tr>
+                <th style="width: 60px;">순위</th>
+                <th>상품명</th>
+                <th>상품군</th>
+                <th class="text-right">판매수량</th>
+                <th class="text-right">누적 순매출액</th>
+                <th class="text-right">매출 기여도</th>
+              </tr>
+            </thead>
+            <tbody id="top-products-body">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="dashboard-footer">
+      <div class="footer-left">
+        <span>© 2025 JANG MART Inc. Data Analytics & Business Intelligence Team</span>
+      </div>
+      <div class="footer-right">
+        <span>데이터 소스: <code>data/JANG_MART.csv</code> (90,681 Rows)</span>
+        <span class="separator">·</span>
+        <span>GitHub Pages & Cloudflare Pages Ready</span>
+      </div>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
