@@ -8352,5 +8352,57 @@
         }
       ]
     }
+  },
+  "elasticity_params": {
+    "status": "exploratory_non_robust",
+    "target_cluster": "cherrypicker",
+    "baseline_discount_rate": 32.2,
+    "contribution_margin": 0.25,
+    "formula": {
+      "frequency_factor": "exp(-beta * (d0 - d1))   [beta: 재방문 간격 반-탄력도, d: 할인율(소수)]",
+      "quantity_factor": "((1 - d1) / (1 - d0)) ^ epsilon_q   [epsilon_q: 수량 가격탄력도]",
+      "retention": "frequency_factor * quantity_factor",
+      "profit": "retention * (G*(1-d1) - VC) - (G*(1-d0) - VC),  VC = (1 - 공헌이익률) * G*(1-d0)"
+    },
+    "quantity_elasticity": {
+      "label": "Log-Log OLS (상품 고정효과, 고객 군집 표준오차)",
+      "n": 18444,
+      "coef": -0.0248,
+      "se": 0.0287,
+      "p_value": 0.3878,
+      "ci_low": -0.0812,
+      "ci_high": 0.0315,
+      "r2": 0.012,
+      "significant": false
+    },
+    "frequency_response": {
+      "label": "ln(재구매 간격) ~ 직전 주문 할인율 (고객 FE + 월 FE)",
+      "n": 10371,
+      "coef": -0.5419,
+      "se": 0.2482,
+      "p_value": 0.0291,
+      "ci_low": -1.0284,
+      "ci_high": -0.0554,
+      "significant": true,
+      "significant_after_bonferroni": false
+    },
+    "scenarios": {
+      "optimistic": {
+        "label": "낙관 (고객 반응 없음)",
+        "gap_semi_elasticity": 0.0,
+        "qty_elasticity": 0.0
+      },
+      "base": {
+        "label": "기준 (점추정)",
+        "gap_semi_elasticity": 0.5419,
+        "qty_elasticity": -0.0248
+      },
+      "pessimistic": {
+        "label": "비관 (95% CI 한계)",
+        "gap_semi_elasticity": 1.0284,
+        "qty_elasticity": -0.0812
+      }
+    },
+    "caveat": "체리피커 재방문 간격 반응은 p=0.029로 단일 검정에서만 유의하며 다중검정 보정 후에는 유의하지 않습니다. 수량 탄력도는 통계적으로 0과 구분되지 않습니다(p=0.39). 탐색적 시나리오로만 해석하세요."
   }
 }

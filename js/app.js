@@ -8353,6 +8353,58 @@ const BUNDLE = {
         }
       ]
     }
+  },
+  "elasticity_params": {
+    "status": "exploratory_non_robust",
+    "target_cluster": "cherrypicker",
+    "baseline_discount_rate": 32.2,
+    "contribution_margin": 0.25,
+    "formula": {
+      "frequency_factor": "exp(-beta * (d0 - d1))   [beta: 재방문 간격 반-탄력도, d: 할인율(소수)]",
+      "quantity_factor": "((1 - d1) / (1 - d0)) ^ epsilon_q   [epsilon_q: 수량 가격탄력도]",
+      "retention": "frequency_factor * quantity_factor",
+      "profit": "retention * (G*(1-d1) - VC) - (G*(1-d0) - VC),  VC = (1 - 공헌이익률) * G*(1-d0)"
+    },
+    "quantity_elasticity": {
+      "label": "Log-Log OLS (상품 고정효과, 고객 군집 표준오차)",
+      "n": 18444,
+      "coef": -0.0248,
+      "se": 0.0287,
+      "p_value": 0.3878,
+      "ci_low": -0.0812,
+      "ci_high": 0.0315,
+      "r2": 0.012,
+      "significant": false
+    },
+    "frequency_response": {
+      "label": "ln(재구매 간격) ~ 직전 주문 할인율 (고객 FE + 월 FE)",
+      "n": 10371,
+      "coef": -0.5419,
+      "se": 0.2482,
+      "p_value": 0.0291,
+      "ci_low": -1.0284,
+      "ci_high": -0.0554,
+      "significant": true,
+      "significant_after_bonferroni": false
+    },
+    "scenarios": {
+      "optimistic": {
+        "label": "낙관 (고객 반응 없음)",
+        "gap_semi_elasticity": 0.0,
+        "qty_elasticity": 0.0
+      },
+      "base": {
+        "label": "기준 (점추정)",
+        "gap_semi_elasticity": 0.5419,
+        "qty_elasticity": -0.0248
+      },
+      "pessimistic": {
+        "label": "비관 (95% CI 한계)",
+        "gap_semi_elasticity": 1.0284,
+        "qty_elasticity": -0.0812
+      }
+    },
+    "caveat": "체리피커 재방문 간격 반응은 p=0.029로 단일 검정에서만 유의하며 다중검정 보정 후에는 유의하지 않습니다. 수량 탄력도는 통계적으로 0과 구분되지 않습니다(p=0.39). 탐색적 시나리오로만 해석하세요."
   }
 };
 const DASHBOARD_DATA = BUNDLE;
@@ -8370,6 +8422,8 @@ let ovPaymentChart = null;
 let ovDowChart = null;
 let clusterScatterChart = null;
 let clusterCategoryBarChart = null;
+let elasticityCurveChart = null;
+let activeElasticityScenario = 'base';
 
 document.addEventListener('DOMContentLoaded', () => {
   renderOverviewKPIs(BUNDLE.summary);
@@ -8416,7 +8470,7 @@ function updateChartsTheme() {
   const textColor = isLightMode ? '#475569' : '#94a3b8';
   const gridColor = isLightMode ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.04)';
 
-  [ovMonthlyChart, ovStoreChart, ovPaymentChart, ovDowChart, clusterScatterChart, clusterCategoryBarChart].forEach(ch => {
+  [ovMonthlyChart, ovStoreChart, ovPaymentChart, ovDowChart, clusterScatterChart, clusterCategoryBarChart, elasticityCurveChart].forEach(ch => {
     if (!ch) return;
     if (ch.options.scales) {
       Object.values(ch.options.scales).forEach(scale => {
@@ -8448,6 +8502,9 @@ function switchView(viewName) {
   } else if (viewName === 'simulator') {
     document.getElementById('tab-simulator').classList.add('active');
     document.getElementById('view-simulator').classList.add('active');
+    if (!elasticityCurveChart) {
+      renderElasticityCurve();
+    }
   }
 }
 
@@ -8803,6 +8860,46 @@ function initSimulatorView() {
   runMarginSimulation();
 }
 
+// 수요 유지율(r) = 재방문 빈도 요인 x 수량 요인 (elasticity_params, 시나리오별)
+//   빈도 요인 = exp(-beta * (d0 - d1)),  수량 요인 = ((1 - d1) / (1 - d0)) ^ epsilon_q
+//   순이익 변화 = r * (G*(1-d1) - VC) - (G*(1-d0) - VC),  VC = (1 - 공헌이익률) * G*(1-d0)
+function computeCherryScenario(cherryRatePct, sc) {
+  const EP = BUNDLE.elasticity_params;
+  const G = BUNDLE.summary.cherry_gross;
+  const d0 = EP.baseline_discount_rate / 100;
+  const d1 = cherryRatePct / 100;
+
+  const freqFactor = Math.exp(-sc.gap_semi_elasticity * (d0 - d1));
+  const qtyFactor = Math.pow((1 - d1) / (1 - d0), sc.qty_elasticity);
+  const retention = freqFactor * qtyFactor;
+
+  const baseNet = G * (1 - d0);
+  const varCost = (1 - EP.contribution_margin) * baseNet;
+  const profitDelta = retention * (G * (1 - d1) - varCost) - (baseNet - varCost);
+
+  return {
+    retention: retention,
+    naiveSaving: G * (d0 - d1),
+    profitDelta: profitDelta,
+    salesDelta: retention * G * (1 - d1) - baseNet
+  };
+}
+
+function fmtMan(v) {
+  const m = Math.round(v / 10000);
+  return `${m >= 0 ? '+' : ''}${m.toLocaleString()}만원`;
+}
+
+function fmtEok(v) {
+  return `${v >= 0 ? '+' : ''}${(v / 100000000).toFixed(2)}억원`;
+}
+
+function setElasticityScenario(key) {
+  activeElasticityScenario = key;
+  document.querySelectorAll('.elas-btn').forEach(b => b.classList.toggle('active', b.dataset.scenario === key));
+  runMarginSimulation();
+}
+
 function runMarginSimulation() {
   const cherryRate = parseFloat(document.getElementById('slider-cherry').value);
   const loyalBoost = parseFloat(document.getElementById('slider-loyal').value);
@@ -8810,20 +8907,101 @@ function runMarginSimulation() {
   document.getElementById('val-cherry-rate').textContent = `${cherryRate}%`;
   document.getElementById('val-loyal-rate').textContent = `+${loyalBoost}%`;
 
-  // Dynamic calculation using exact baseline from bundle
-  const cherryGross = BUNDLE.summary.cherry_gross; // 약 3.95억원
-  const deltaRate = (32.2 - cherryRate) / 100;
-  const savedCost = Math.round(cherryGross * deltaRate);
+  const EP = BUNDLE.elasticity_params;
+  const sc = EP.scenarios[activeElasticityScenario];
+
+  // 체리피커: 수요 이탈(탄력도) 반영 순이익 변화
+  const cherry = computeCherryScenario(cherryRate, sc);
 
   const loyalNet = BUNDLE.summary.loyal_net; // 약 14.0억원
   const loyalSalesBoost = Math.round(loyalNet * (loyalBoost / 100));
+  const loyalProfit = loyalSalesBoost * EP.contribution_margin;
 
-  // Assume retail net contribution margin is ~25%
-  const netProfit = Math.round(savedCost + (loyalSalesBoost * 0.25));
+  const netProfit = Math.round(cherry.profitDelta + loyalProfit);
 
-  document.getElementById('res-saved-cost').textContent = `${savedCost >= 0 ? '+' : ''}${Math.round(savedCost / 10000).toLocaleString()}만원`;
+  document.getElementById('res-saved-cost').textContent = fmtMan(cherry.profitDelta);
+  document.getElementById('res-saved-hint').textContent =
+    `단순 가정 ${fmtMan(cherry.naiveSaving)} 대비 · 수요 유지율 ${(cherry.retention * 100).toFixed(1)}%`;
   document.getElementById('res-loyal-boost').textContent = `+${Math.round(loyalSalesBoost / 10000).toLocaleString()}만원`;
-  document.getElementById('res-net-profit').textContent = `${netProfit >= 0 ? '+' : ''}${(netProfit / 100000000).toFixed(2)}억원`;
+  document.getElementById('res-net-profit').textContent = fmtEok(netProfit);
+  document.getElementById('res-net-hint').textContent =
+    `${sc.label} · 공헌이익률 ${Math.round(EP.contribution_margin * 100)}% 가정`;
+
+  // 3개 시나리오 범위 (현재 슬라이더 기준)
+  const rng = ['optimistic', 'base', 'pessimistic'].map(k => {
+    const r = computeCherryScenario(cherryRate, EP.scenarios[k]);
+    return { key: k, label: EP.scenarios[k].label, net: Math.round(r.profitDelta + loyalProfit), ret: r.retention };
+  });
+  document.getElementById('elas-range').innerHTML = rng.map(r =>
+    `<span class="elas-range-item ${r.key === activeElasticityScenario ? 'on' : ''}"><em>${r.label}</em><strong>${fmtEok(r.net)}</strong><small>유지율 ${(r.ret * 100).toFixed(1)}%</small></span>`
+  ).join('');
+
+  updateElasticityCurve(cherryRate);
+}
+
+function renderElasticityCurve() {
+  const canvas = document.getElementById('elasticityCurveChart');
+  if (!canvas) return;
+  const EP = BUNDLE.elasticity_params;
+  const colors = { optimistic: '#10b981', base: '#f59e0b', pessimistic: '#ef4444' };
+  const textColor = isLightMode ? '#475569' : '#94a3b8';
+  const gridColor = isLightMode ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.04)';
+  const cherryRate = parseFloat(document.getElementById('slider-cherry').value);
+
+  const xs = [];
+  for (let r = 15; r <= 35; r++) xs.push(r);
+
+  const datasets = Object.keys(EP.scenarios).map(key => ({
+    label: EP.scenarios[key].label,
+    data: xs.map(r => ({ x: r, y: +(computeCherryScenario(r, EP.scenarios[key]).retention * 100).toFixed(2) })),
+    borderColor: colors[key],
+    backgroundColor: colors[key],
+    borderWidth: key === activeElasticityScenario ? 3 : 1.5,
+    pointRadius: 0,
+    tension: 0.25,
+    order: 2
+  }));
+  datasets.push({
+    label: '현재 슬라이더',
+    type: 'scatter',
+    data: [{ x: cherryRate, y: +(computeCherryScenario(cherryRate, EP.scenarios[activeElasticityScenario]).retention * 100).toFixed(2) }],
+    borderColor: '#ffffff',
+    backgroundColor: colors[activeElasticityScenario],
+    pointRadius: 6,
+    pointBorderWidth: 2,
+    order: 1
+  });
+
+  elasticityCurveChart = new Chart(canvas.getContext('2d'), {
+    type: 'line',
+    data: { datasets: datasets },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { labels: { color: textColor, boxWidth: 10, font: { size: 9 } } },
+        tooltip: { callbacks: { label: c => `${c.dataset.label}: 수요 유지율 ${c.parsed.y}% (목표 할인율 ${c.parsed.x}%)` } }
+      },
+      scales: {
+        x: { type: 'linear', min: 15, max: 35, title: { display: true, text: '체리피커 목표 할인율', color: textColor, font: { size: 9 } }, grid: { color: gridColor }, ticks: { color: textColor, font: { size: 9 }, callback: v => v + '%' } },
+        y: { title: { display: true, text: '수요 유지율', color: textColor, font: { size: 9 } }, grid: { color: gridColor }, ticks: { color: textColor, font: { size: 9 }, callback: v => v + '%' } }
+      }
+    }
+  });
+}
+
+function updateElasticityCurve(cherryRate) {
+  if (!elasticityCurveChart) return;
+  const EP = BUNDLE.elasticity_params;
+  const colors = { optimistic: '#10b981', base: '#f59e0b', pessimistic: '#ef4444' };
+  const keys = Object.keys(EP.scenarios);
+  keys.forEach((key, i) => {
+    elasticityCurveChart.data.datasets[i].borderWidth = key === activeElasticityScenario ? 3 : 1.5;
+  });
+  const pt = elasticityCurveChart.data.datasets[keys.length];
+  pt.data = [{ x: cherryRate, y: +(computeCherryScenario(cherryRate, EP.scenarios[activeElasticityScenario]).retention * 100).toFixed(2) }];
+  pt.backgroundColor = colors[activeElasticityScenario];
+  elasticityCurveChart.update('none');
 }
 
 function renderBasketRules() {

@@ -264,12 +264,20 @@
               </div>
             </div>
 
+            <!-- 탄력도 시나리오 선택 -->
+            <div class="elas-toolbar" role="group" aria-label="가격 탄력도 시나리오">
+              <span class="elas-toolbar-lbl">📉 수요 이탈 시나리오</span>
+              <button type="button" class="elas-btn" id="elas-btn-optimistic" data-scenario="optimistic" onclick="setElasticityScenario('optimistic')">낙관</button>
+              <button type="button" class="elas-btn active" id="elas-btn-base" data-scenario="base" onclick="setElasticityScenario('base')">기준</button>
+              <button type="button" class="elas-btn" id="elas-btn-pessimistic" data-scenario="pessimistic" onclick="setElasticityScenario('pessimistic')">비관</button>
+            </div>
+
             <!-- Simulation KPI Output Cards -->
             <div class="sim-result-grid">
               <div class="sim-stat-card border-green">
-                <span class="sim-stat-lbl">연간 프로모션 예산 절감 (가정)</span>
-                <span class="sim-stat-val text-emerald" id="res-saved-cost">+4,029만원</span>
-                <span class="sim-stat-hint">체리피커 불필요 할인 차단분</span>
+                <span class="sim-stat-lbl">체리피커 할인 축소 순효과 (수요 이탈 반영)</span>
+                <span class="sim-stat-val text-emerald" id="res-saved-cost">+6,632만원</span>
+                <span class="sim-stat-hint" id="res-saved-hint">단순 가정 대비 수요 유지율 반영</span>
               </div>
               <div class="sim-stat-card border-blue">
                 <span class="sim-stat-lbl">VIP 리텐션 기대 매출 효과</span>
@@ -278,10 +286,20 @@
               </div>
               <div class="sim-stat-card border-gold highlight-gold">
                 <span class="sim-stat-lbl">🌟 시나리오 순이익 개선 예상</span>
-                <span class="sim-stat-val text-gold" id="res-net-profit">+5,078만원</span>
-                <span class="sim-stat-hint">공헌이익률 25% 가정 기반</span>
+                <span class="sim-stat-val text-gold" id="res-net-profit">+0.77억원</span>
+                <span class="sim-stat-hint" id="res-net-hint">기준 (점추정) · 공헌이익률 25% 가정</span>
               </div>
             </div>
+
+            <!-- 시나리오 범위 및 수요 감소 곡선 -->
+            <div class="elas-range" id="elas-range" aria-live="polite"></div>
+            <div class="elas-curve-box">
+              <canvas id="elasticityCurveChart"></canvas>
+            </div>
+            <p class="elas-caveat" id="elas-caveat">
+              ⚠️ <strong>탐색적 추정:</strong> 체리피커 재방문 간격 반응(p≈0.03)은 다중검정 보정 후 유의하지 않고, 수량 탄력도(ε≈-0.02)는 통계적으로 0과 구분되지 않습니다.
+              단일 값이 아닌 <strong>낙관~비관 범위</strong>로 해석하세요.
+            </p>
 
             <div class="sim-action-summary">
               <strong>💡 데이터 분석가 의사결정 권고:</strong> 체리피커 군집에 '5만 원 이상 결제 시 쿠폰 적용' 조건을 부여하여 평균 할인율을 22%로 통제하고, 절감된 예산의 일부를 연간 48만 원 이상 구매하는 로열 VIP 군에 캐시백으로 리워드하는 것이 마진 극대화의 핵심입니다.

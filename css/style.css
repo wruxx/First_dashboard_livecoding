@@ -580,6 +580,71 @@ body.light-mode .sim-action-summary {
   color: #92400e;
 }
 
+/* Elasticity scenario toolbar / range / curve */
+.elas-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.elas-toolbar-lbl {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-dim);
+  margin-right: auto;
+}
+.elas-btn {
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-dim);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.elas-btn:hover { border-color: var(--amber); color: var(--amber); transform: translateY(-1px); }
+.elas-btn.active {
+  background: rgba(245, 158, 11, 0.18);
+  border-color: var(--amber);
+  color: var(--amber);
+}
+.elas-range {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+.elas-range-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 6px 4px;
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-sm);
+  opacity: 0.7;
+  transition: all 0.2s ease;
+}
+.elas-range-item.on { opacity: 1; border-style: solid; border-color: var(--amber); background: rgba(245, 158, 11, 0.08); }
+.elas-range-item em { font-style: normal; font-size: 10px; color: var(--text-dim); }
+.elas-range-item strong { font-family: 'Outfit', sans-serif; font-size: 14px; font-weight: 800; }
+.elas-range-item small { font-size: 9px; color: var(--text-sub); }
+.elas-curve-box {
+  position: relative;
+  height: 150px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 6px 8px;
+}
+.elas-caveat {
+  margin: 0;
+  font-size: 10px;
+  line-height: 1.5;
+  color: var(--text-sub);
+}
+.elas-caveat strong { color: var(--amber); }
+
 /* Basket Cross-Selling Cards */
 .basket-rules-container {
   display: flex;
