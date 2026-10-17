@@ -3,245 +3,241 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>장마트(JANG MART) 2025 경영 실적 모니터링 대시보드</title>
+  <title>장마트 2025 경영 실적 & 할인민감도 클러스터링 대시보드</title>
   <!-- Google Fonts & Chart.js -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700;800&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="app-container">
-    <!-- Header -->
-    <header class="dashboard-header">
-      <div class="header-left">
-        <div class="logo-badge">
-          <span class="logo-icon">🛒</span>
-          <div class="logo-text">
-            <span class="brand-title">JANG MART</span>
-            <span class="brand-sub">Executive Performance Monitoring</span>
-          </div>
-        </div>
-        <div class="live-pill">
-          <span class="live-dot"></span>
-          <span>2025 연간 결산 완결 데이터</span>
+  <div class="deck-container">
+    <!-- Top Compact Header -->
+    <header class="deck-header">
+      <div class="brand-box">
+        <span class="brand-logo">🛒</span>
+        <div>
+          <h1 class="brand-title">JANG MART <span class="badge-live">EXECUTIVE BOARD</span></h1>
+          <p class="brand-desc">2025 연간 결산(90,681건) 및 머신러닝(K-Means k=4) 고객 세그멘테이션</p>
         </div>
       </div>
-      <div class="header-right">
-        <div class="filter-group">
-          <button class="filter-btn active" data-filter="all">전체 채널</button>
-          <button class="filter-btn" data-filter="offline">오프라인 매장</button>
-          <button class="filter-btn" data-filter="online">온라인몰</button>
-        </div>
-        <button id="refresh-btn" class="icon-btn" title="새로고침">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+
+      <!-- Presentation View Toggle Tabs -->
+      <div class="view-switch">
+        <button class="view-btn active" id="tab-overview" onclick="switchView('overview')">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          1. 5대 핵심 실적 총괄
         </button>
+        <button class="view-btn" id="tab-cluster" onclick="switchView('cluster')">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          2. 🔥 할인민감도 K-Means 클러스터 심층분석
+          <span class="hot-badge">핵심 과제</span>
+        </button>
+      </div>
+
+      <div class="header-status">
+        <span class="status-dot"></span>
+        <span>발표 모드 (한 화면 뷰)</span>
       </div>
     </header>
 
-    <!-- Top 5 Core KPI Cards -->
-    <section class="kpi-grid">
-      <!-- KPI 1 -->
-      <div class="kpi-card highlight-cyan">
-        <div class="kpi-top">
-          <span class="kpi-badge">KPI 1 · 총 매출 성과</span>
-          <span class="kpi-icon">💰</span>
-        </div>
-        <div class="kpi-body">
-          <div class="kpi-label">연간 순매출액 (Net Sales)</div>
-          <div class="kpi-value" id="kpi-net-sales">29.71<span class="unit">억원</span></div>
-          <div class="kpi-subtext">총 30.15억원 중 반품 제외 (반품률 1.45%)</div>
-        </div>
-        <div class="kpi-footer">
-          <span class="tag positive">평균 할인율 19.7%</span>
-          <span class="hint">건전 마진 유지</span>
-        </div>
-      </div>
-
-      <!-- KPI 2 -->
-      <div class="kpi-card highlight-purple">
-        <div class="kpi-top">
-          <span class="kpi-badge">KPI 2 · 고객 객단가</span>
-          <span class="kpi-icon">🎯</span>
-        </div>
-        <div class="kpi-body">
-          <div class="kpi-label">1회 건당 결제액 (AOV)</div>
-          <div class="kpi-value" id="kpi-aov">49,451<span class="unit">원</span></div>
-          <div class="kpi-subtext">연간 1인당 구매액(ARPU) 297,100원</div>
-        </div>
-        <div class="kpi-footer">
-          <span class="tag neutral">연평균 6.01회 구매</span>
-          <span class="hint">10,000명 단골 락인</span>
-        </div>
-      </div>
-
-      <!-- KPI 3 -->
-      <div class="kpi-card highlight-blue">
-        <div class="kpi-top">
-          <span class="kpi-badge">KPI 3 · 옴니채널</span>
-          <span class="kpi-icon">🌐</span>
-        </div>
-        <div class="kpi-body">
-          <div class="kpi-label">온라인몰 단독 매출 비중</div>
-          <div class="kpi-value" id="kpi-online-share">39.4<span class="unit">%</span></div>
-          <div class="kpi-subtext">11억 7,183만원 (단일 1위 점포)</div>
-        </div>
-        <div class="kpi-footer">
-          <span class="tag blue">오프라인 8개점 60.6%</span>
-          <span class="hint">잠실·왕십리 강세</span>
-        </div>
-      </div>
-
-      <!-- KPI 4 -->
-      <div class="kpi-card highlight-emerald">
-        <div class="kpi-top">
-          <span class="kpi-badge">KPI 4 · 수익 견인</span>
-          <span class="kpi-icon">🏆</span>
-        </div>
-        <div class="kpi-body">
-          <div class="kpi-label">1위 카테고리 (소형가전)</div>
-          <div class="kpi-value" id="kpi-top-cat">7.32<span class="unit">억원</span></div>
-          <div class="kpi-subtext">전체 매출의 24.6% 압도적 1위</div>
-        </div>
-        <div class="kpi-footer">
-          <span class="tag emerald">침구홈 15.4% · 신선 10.6%</span>
-          <span class="hint">수익+트래픽 조화</span>
-        </div>
-      </div>
-
-      <!-- KPI 5 -->
-      <div class="kpi-card highlight-amber">
-        <div class="kpi-top">
-          <span class="kpi-badge">KPI 5 · 결제 트렌드</span>
-          <span class="kpi-icon">💳</span>
-        </div>
-        <div class="kpi-body">
-          <div class="kpi-label">디지털 간편결제(Pay) 비중</div>
-          <div class="kpi-value" id="kpi-pay-share">28.1<span class="unit">%</span></div>
-          <div class="kpi-subtext">총 25,476건 (신용카드 56.8%)</div>
-        </div>
-        <div class="kpi-footer">
-          <span class="tag amber">핀테크 락인 효과</span>
-          <span class="hint">체크카드 15.1%</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- Main Visual Charts Section -->
-    <section class="charts-grid-row">
-      <!-- Chart 1: Monthly Sales & Order Trend -->
-      <div class="chart-card flex-2">
-        <div class="chart-header">
-          <div>
-            <h3 class="chart-title">월별 매출 추이 및 주문 트렌드</h3>
-            <p class="chart-desc">1월부터 12월까지 순매출액(막대)과 거래건수(라인)의 월별 성장 곡선</p>
-          </div>
-          <div class="chart-legend-custom">
-            <span class="dot-legend cyan"></span><span>순매출액(원)</span>
-            <span class="dot-legend purple"></span><span>주문건수(건)</span>
+    <!-- VIEW 1: 5대 핵심 실적 총괄 뷰 (1-Screen Presentation) -->
+    <main id="view-overview" class="deck-main active">
+      <!-- Top 5 Compact KPI Strip -->
+      <section class="kpi-strip">
+        <div class="kpi-box border-cyan">
+          <span class="kpi-num-badge">KPI 1</span>
+          <div class="kpi-inner">
+            <span class="kpi-tit">연간 순매출액</span>
+            <span class="kpi-val text-cyan">29.71<small>억원</small></span>
+            <span class="kpi-sub">총 30.15억 (반품률 1.45%)</span>
           </div>
         </div>
-        <div class="chart-wrapper">
-          <canvas id="monthlyTrendChart"></canvas>
-        </div>
-      </div>
 
-      <!-- Chart 2: Channel & Store Distribution -->
-      <div class="chart-card flex-1">
-        <div class="chart-header">
-          <div>
-            <h3 class="chart-title">채널 및 점포별 매출 기여도</h3>
-            <p class="chart-desc">온라인몰 및 오프라인 8개 거점 매장별 매출 순위</p>
+        <div class="kpi-box border-purple">
+          <span class="kpi-num-badge">KPI 2</span>
+          <div class="kpi-inner">
+            <span class="kpi-tit">건당 결제액(AOV)</span>
+            <span class="kpi-val text-purple">49,451<small>원</small></span>
+            <span class="kpi-sub">인당 29.7만원 / 연 6.0회</span>
           </div>
         </div>
-        <div class="chart-wrapper">
-          <canvas id="channelStoreChart"></canvas>
-        </div>
-      </div>
-    </section>
 
-    <section class="charts-grid-row">
-      <!-- Chart 3: Category Breakdown -->
-      <div class="chart-card flex-1">
-        <div class="chart-header">
-          <div>
-            <h3 class="chart-title">10대 상품군별 매출 믹스 (Category Mix)</h3>
-            <p class="chart-desc">고단가 효자 품목(가전/침구)과 일상 트래픽 품목(식품)의 비중</p>
+        <div class="kpi-box border-blue">
+          <span class="kpi-num-badge">KPI 3</span>
+          <div class="kpi-inner">
+            <span class="kpi-tit">온라인 단일 비중</span>
+            <span class="kpi-val text-blue">39.4<small>%</small></span>
+            <span class="kpi-sub">11.7억원 (오프 8개점 60.6%)</span>
           </div>
         </div>
-        <div class="chart-wrapper">
-          <canvas id="categoryDonutChart"></canvas>
-        </div>
-      </div>
 
-      <!-- Chart 4: Payment Method Distribution -->
-      <div class="chart-card flex-1">
-        <div class="chart-header">
-          <div>
-            <h3 class="chart-title">결제수단별 거래 비중</h3>
-            <p class="chart-desc">신용카드, 간편결제, 체크카드의 거래건수 비교</p>
+        <div class="kpi-box border-emerald">
+          <span class="kpi-num-badge">KPI 4</span>
+          <div class="kpi-inner">
+            <span class="kpi-tit">1위 매출 카테고리</span>
+            <span class="kpi-val text-emerald">소형가전<small>24.6%</small></span>
+            <span class="kpi-sub">7.32억원 (침구 15.4%·신선 10.6%)</span>
           </div>
         </div>
-        <div class="chart-wrapper">
-          <canvas id="paymentChart"></canvas>
-        </div>
-      </div>
 
-      <!-- Chart 5: Day of Week Pattern -->
-      <div class="chart-card flex-1">
-        <div class="chart-header">
-          <div>
-            <h3 class="chart-title">요일별 매출 패턴</h3>
-            <p class="chart-desc">주중 vs 주말 소비 탄력성</p>
+        <div class="kpi-box border-amber">
+          <span class="kpi-num-badge">KPI 5</span>
+          <div class="kpi-inner">
+            <span class="kpi-tit">간편결제(Pay) 비중</span>
+            <span class="kpi-val text-amber">28.1<small>%</small></span>
+            <span class="kpi-sub">총 25,476건 (신용 56.8%)</span>
           </div>
         </div>
-        <div class="chart-wrapper">
-          <canvas id="dowChart"></canvas>
-        </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- Top 10 Bestselling Products Table -->
-    <section class="table-section">
-      <div class="table-card">
-        <div class="table-header">
-          <div>
-            <h3 class="table-title">매출 기여 상위 TOP 10 베스트셀러 상품</h3>
-            <p class="table-desc">2025년 가장 높은 누적 결제액을 창출한 프리미엄 & 스테디셀러 품목</p>
+      <!-- 4-Grid Balanced Chart Presentation Area -->
+      <section class="overview-chart-grid">
+        <!-- Chart 1: Monthly Trend -->
+        <div class="deck-chart-card">
+          <div class="card-head">
+            <h3 class="card-tit">월별 순매출액 & 주문건수 추이</h3>
+            <span class="head-legend"><span class="legend-dot cyan"></span>매출 <span class="legend-dot purple"></span>주문</span>
           </div>
-          <span class="badge-pill">SKU Leaderboard</span>
+          <div class="card-chart">
+            <canvas id="ovMonthlyChart"></canvas>
+          </div>
         </div>
-        <div class="table-responsive">
-          <table class="custom-table" id="top-products-table">
-            <thead>
-              <tr>
-                <th style="width: 60px;">순위</th>
-                <th>상품명</th>
-                <th>상품군</th>
-                <th class="text-right">판매수량</th>
-                <th class="text-right">누적 순매출액</th>
-                <th class="text-right">매출 기여도</th>
-              </tr>
-            </thead>
-            <tbody id="top-products-body">
-              <!-- Dynamically populated -->
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </section>
 
-    <!-- Footer -->
-    <footer class="dashboard-footer">
-      <div class="footer-left">
-        <span>© 2025 JANG MART Inc. Data Analytics & Business Intelligence Team</span>
-      </div>
-      <div class="footer-right">
-        <span>데이터 소스: <code>data/JANG_MART.csv</code> (90,681 Rows)</span>
-        <span class="separator">·</span>
-        <span>GitHub Pages & Cloudflare Pages Ready</span>
-      </div>
+        <!-- Chart 2: Store / Channel Bar -->
+        <div class="deck-chart-card">
+          <div class="card-head">
+            <h3 class="card-tit">온라인몰 및 오프라인 8개점 매출 순위</h3>
+            <span class="head-tag">온라인몰 단독 1위</span>
+          </div>
+          <div class="card-chart">
+            <canvas id="ovStoreChart"></canvas>
+          </div>
+        </div>
+
+        <!-- Chart 3: Category Mix -->
+        <div class="deck-chart-card">
+          <div class="card-head">
+            <h3 class="card-tit">10대 상품군 매출 믹스 (Category Mix)</h3>
+            <span class="head-tag">가전·침구 40%</span>
+          </div>
+          <div class="card-chart">
+            <canvas id="ovCategoryChart"></canvas>
+          </div>
+        </div>
+
+        <!-- Chart 4: Payment & Day Pattern -->
+        <div class="deck-chart-card">
+          <div class="card-head">
+            <h3 class="card-tit">결제수단별 점유율 및 요일별 패턴</h3>
+            <span class="head-tag">페이 28% 도달</span>
+          </div>
+          <div class="card-chart-split">
+            <div class="split-half"><canvas id="ovPaymentChart"></canvas></div>
+            <div class="split-half"><canvas id="ovDowChart"></canvas></div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- VIEW 2: 시급 분석 지표 - K-Means 할인민감도 클러스터링 뷰 -->
+    <main id="view-cluster" class="deck-main">
+      <!-- Urgent Metric Executive Summary Alert -->
+      <section class="urgent-banner">
+        <div class="urgent-icon">🚨</div>
+        <div class="urgent-body">
+          <div class="urgent-tit">발굴된 시급 분석 지표: <strong>「연간 할인 프로모션 7.4억 원 (할인율 19.7%)의 마진 잠식」</strong></div>
+          <div class="urgent-desc">
+            전체 순매출 29.7억 원 중 무려 <strong>7.4억 원(정가의 약 20%)</strong>이 할인으로 지출되고 있습니다. 
+            모든 고객에게 일괄 할인 쿠폰을 뿌리는 대신, <strong>K-Means (k=4, 실루엣 점수 0.40)</strong> 머신러닝 군집화로 고객을 4대 유형으로 분할하여 타겟팅해야 마진을 즉시 15% 이상 개선할 수 있습니다.
+          </div>
+        </div>
+        <div class="urgent-stat">
+          <div class="stat-pill"><small>총 할인 지출</small> 7억 4,068만원</div>
+          <div class="stat-pill"><small>최적 군집수</small> K = 4 Groups</div>
+        </div>
+      </section>
+
+      <!-- Cluster Interaction Strip (Selectable Filter Cards) -->
+      <section class="cluster-selector-strip" id="cluster-cards-container">
+        <!-- Dynamically injected cluster buttons -->
+      </section>
+
+      <!-- Cluster Detailed Analytics Area -->
+      <section class="cluster-analytics-grid">
+        <!-- Left: Scatter / Profile Distribution -->
+        <div class="deck-chart-card flex-1">
+          <div class="card-head">
+            <div>
+              <h3 class="card-tit" id="cluster-chart-tit">군집별 고객 분포 & 할인민감도 스캐터 (K-Means)</h3>
+              <p class="card-sub" id="cluster-chart-sub">X축: 평균할인율(%) vs Y축: 1인당 총구매금액(원)</p>
+            </div>
+            <span class="head-tag" id="selected-cluster-badge">전체 군집 비교</span>
+          </div>
+          <div class="card-chart">
+            <canvas id="clusterScatterChart"></canvas>
+          </div>
+        </div>
+
+        <!-- Right: Actionable Strategy & Dynamic Comparison Chart -->
+        <div class="deck-chart-card flex-1">
+          <div class="card-head">
+            <div>
+              <h3 class="card-tit" id="cluster-action-tit">선택 군집 특성 및 데이터 기반 실행 전략 (Action Plan)</h3>
+              <p class="card-sub">상호작용 클릭 시 해당 군집의 상품 선호도 및 매출 추이가 동적으로 연동됩니다.</p>
+            </div>
+          </div>
+          
+          <div class="cluster-action-panel">
+            <div class="action-card" id="cluster-detail-box">
+              <div class="action-top">
+                <span class="action-name" id="action-name">전체 10,000명 고객 통합 뷰</span>
+                <span class="action-badge" id="action-badge">Overview</span>
+              </div>
+              <p class="action-desc" id="action-desc">위 4개 클러스터 카드를 클릭하면 군집별 상세 프로필과 즉시 실행 가능한 마케팅 전략이 표시됩니다.</p>
+              
+              <div class="action-metrics-row">
+                <div class="action-m-box">
+                  <span class="m-lbl">고객 수</span>
+                  <span class="m-val" id="m-count">10,000명</span>
+                </div>
+                <div class="action-m-box">
+                  <span class="m-lbl">평균 할인율</span>
+                  <span class="m-val" id="m-disc">19.7%</span>
+                </div>
+                <div class="action-m-box">
+                  <span class="m-lbl">1인당 평균매출</span>
+                  <span class="m-val" id="m-spend">29.7만원</span>
+                </div>
+                <div class="action-m-box">
+                  <span class="m-lbl">평균 결제건수</span>
+                  <span class="m-val" id="m-freq">6.0회</span>
+                </div>
+              </div>
+
+              <div class="strategy-banner" id="strategy-banner">
+                <strong>🎯 추천 액션:</strong> 상단 군집 카드 중 <strong>「체리피커 할인민감 고객군」</strong>을 클릭하여 마진 방어 전략을 확인하세요.
+              </div>
+            </div>
+
+            <!-- Dynamic Category Breakdown Chart for Selected Cluster -->
+            <div class="cluster-subchart-box">
+              <h4 class="subchart-tit">선택 군집의 상품군별 매출 선호도 (Dynamic)</h4>
+              <div class="subchart-wrapper">
+                <canvas id="clusterCategoryBarChart"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Compact Footer -->
+    <footer class="deck-footer">
+      <span>장마트(JANG MART) 2025 임원 보고용 대시보드</span>
+      <span>K-Means 클러스터링 알고리즘 (Scikit-Learn 기반 k=4 분할)</span>
+      <span>GitHub Pages 배포 연동 완료</span>
     </footer>
   </div>
 
