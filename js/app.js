@@ -8524,6 +8524,7 @@ function initKeyboardShortcuts() {
     else if (e.key === '3') switchView('simulator');
     else if (e.key === 'f' || e.key === 'F') toggleFullScreen();
     else if (e.key === 't' || e.key === 'T') toggleTheme();
+    else if (e.key === 'p' || e.key === 'P') { e.preventDefault(); window.print(); }
     else if (e.key === 'ArrowRight') {
       if (activeView === 'overview') switchView('cluster');
       else if (activeView === 'cluster') switchView('simulator');
@@ -9064,6 +9065,93 @@ function renderBasketRules() {
     `;
     container.appendChild(div);
   });
+}
+
+// ----------------- DATA EXPORT (CSV with UTF-8 BOM) -----------------
+function downloadCSV(filename, csvContent) {
+  const bom = '\uFEFF';
+  const blob = new Blob([bom + csvContent], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+function exportSimulationCSV() {
+  const cherryRate = parseFloat(document.getElementById('slider-cherry').value);
+  const loyalBoost = parseFloat(document.getElementById('slider-loyal').value);
+  const EP = BUNDLE.elasticity_params;
+  const loyalNet = BUNDLE.summary.loyal_net;
+  const loyalSalesBoost = Math.round(loyalNet * (loyalBoost / 100));
+  const loyalProfit = Math.round(loyalSalesBoost * EP.contribution_margin);
+
+  const lines = [
+    ['장마트 2025 What-If 프로모션 마진 시뮬레이션 결과 리포트'],
+    ['생성일시', new Date().toLocaleString('ko-KR')],
+    ['선택 시나리오', EP.scenarios[activeElasticityScenario].label],
+    ['체리피커 목표 할인율', `${cherryRate}% (기준 ${EP.baseline_discount_rate}%)`],
+    ['로열 VIP 리텐션 강화', `+${loyalBoost}%`],
+    ['소매 공헌이익률 가정', `${Math.round(EP.contribution_margin * 100)}%`],
+    [''],
+    ['[시나리오별 순이익 비교 분석]'],
+    ['시나리오명', '수요유지율(%)', '체리피커순효과(원)', 'VIP리텐션매출(원)', 'VIP기여순익(원)', '합산순이익개선(원)']
+  ];
+
+  ['optimistic', 'base', 'pessimistic'].forEach(k => {
+    const sc = EP.scenarios[k];
+    const r = computeCherryScenario(cherryRate, sc);
+    const net = Math.round(r.profitDelta + loyalProfit);
+    lines.push([
+      sc.label,
+      (r.retention * 100).toFixed(2),
+      Math.round(r.profitDelta),
+      loyalSalesBoost,
+      loyalProfit,
+      net
+    ]);
+  });
+
+  lines.push(['']);
+  lines.push(['[참고 계량경제학 추정치]']);
+  lines.push(['체리피커 수량 가격탄력도(ε)', EP.quantity_elasticity.coef, `p-value: ${EP.quantity_elasticity.p_value}`, '비유의 (0과 구분 불가)']);
+  lines.push(['체리피커 재구매간격 반탄력도(β)', EP.frequency_response.coef, `p-value: ${EP.frequency_response.p_value}`, '탐색적 (다중검정 보정 시 비유의)']);
+
+  const csv = lines.map(row => row.map(v => `"${String(v ?? '').replace(/"/g, '""')}"`).join(',')).join('\r\n');
+  downloadCSV(`장마트_시뮬레이션_리포트_${cherryRate}pct.csv`, csv);
+}
+
+function exportClusterCSV() {
+  const lines = [
+    ['장마트 2025 K-Means 4대 고객 군집 프로필 요약'],
+    ['추출일시', new Date().toLocaleString('ko-KR')],
+    ['총 분석 고객 수', '10,000명'],
+    ['연간 순매출 총액', `${(BUNDLE.summary.net_sales / 100000000).toFixed(2)}억원`],
+    [''],
+    ['군집ID', '군집명', '고객수(명)', '고객비중(%)', '평균할인율(%)', '인당연간구매액(원)', '인당방문빈도(회)', '건당결제액(원)', '전략방향']
+  ];
+
+  const totalCust = BUNDLE.summary.customers_count;
+  BUNDLE.cluster_list.forEach(cl => {
+    const pct = ((cl.count / totalCust) * 100).toFixed(1);
+    lines.push([
+      cl.id,
+      cl.name,
+      cl.count,
+      pct,
+      cl.avg_discount_rate,
+      cl.avg_spend,
+      cl.avg_freq,
+      cl.avg_aov,
+      cl.strategy
+    ]);
+  });
+
+  const csv = lines.map(row => row.map(v => `"${String(v ?? '').replace(/"/g, '""')}"`).join(',')).join('\r\n');
+  downloadCSV('장마트_고객군집_요약리포트.csv', csv);
 }
 
 // ----------------- SCATTER ZOOM RESET -----------------

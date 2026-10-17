@@ -39,20 +39,29 @@
         </button>
       </div>
 
-      <!-- Presentation Controls (Theme Toggle, Print, Fullscreen) -->
+      <!-- Presentation Controls (Theme Toggle, Print, Export, Fullscreen) -->
       <div class="header-right-tools">
+        <!-- Data Export Dropdown / Buttons -->
+        <button class="tool-btn" onclick="exportSimulationCSV()" title="현재 시뮬레이션 결과 및 시나리오 리포트 다운로드 (CSV)">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          시뮬레이션 CSV
+        </button>
+        <button class="tool-btn" onclick="exportClusterCSV()" title="4대 군집 요약 및 특성 리포트 다운로드 (CSV)">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          군집요약 CSV
+        </button>
         <!-- Theme Toggle Button -->
-        <button class="tool-btn" id="theme-toggle-btn" onclick="toggleTheme()" title="라이트/다크 테마 전환">
+        <button class="tool-btn" id="theme-toggle-btn" onclick="toggleTheme()" title="라이트/다크 테마 전환 (단축키 T)">
           <span id="theme-icon">☀️</span>
           <span id="theme-text">라이트 모드</span>
         </button>
         <!-- Print / PDF Button -->
-        <button class="tool-btn" onclick="window.print()" title="보고서 인쇄 및 PDF 저장 (Ctrl+P)">
+        <button class="tool-btn" onclick="window.print()" title="보고서 인쇄 및 PDF 저장 (단축키 P / Ctrl+P)">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
-          PDF 인쇄
+          PDF 인쇄 [P]
         </button>
         <!-- Fullscreen Button -->
-        <button class="tool-btn" id="fullscreen-btn" onclick="toggleFullScreen()" title="전체화면 토글 (F)">
+        <button class="tool-btn" id="fullscreen-btn" onclick="toggleFullScreen()" title="전체화면 토글 (단축키 F)">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
           전체화면 [F]
         </button>
@@ -363,9 +372,9 @@
 
     <!-- Footer -->
     <footer class="deck-footer">
-      <span>장마트(JANG MART) 2025 임원 보고용 대시보드 v2.1</span>
-      <span>단축키: [1] 총괄 [2] 클러스터 [3] 시뮬레이터 [F] 전체화면 [T] 테마전환</span>
-      <span>GitHub Pages 배포 연동 완료</span>
+      <span>장마트(JANG MART) 2025 임원 보고용 대시보드 v3.1 (Final Release)</span>
+      <span>단축키: [1] 총괄 [2] 클러스터 [3] 시뮬레이터 [F] 전체화면 [T] 테마전환 [P] PDF인쇄 [Esc] 모달닫기</span>
+      <span>GitHub Pages 실시간 호스팅 배포 완료</span>
     </footer>
   </div>
 

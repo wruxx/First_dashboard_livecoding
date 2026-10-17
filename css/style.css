@@ -949,26 +949,97 @@ body.light-mode .cust-search-item:hover, body.light-mode .cust-search-item.activ
 
 /* Print CSS for Clean Slide Report Printing / PDF Save */
 @media print {
+  @page {
+    size: A4 landscape;
+    margin: 10mm 12mm;
+  }
+  *, *::before, *::after {
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
   body {
     background: #ffffff !important;
-    color: #000000 !important;
+    color: #0f172a !important;
+    font-size: 11pt !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
   }
-  .header-right-tools, .view-switch, .modal-overlay, .deck-footer {
+  .deck-container {
+    max-width: 100% !important;
+    padding: 0 !important;
+    gap: 16px !important;
+  }
+  .header-right-tools, .view-switch, .modal-overlay, .deck-footer, .zoom-reset-btn, .cust-search, #btn-reset-zoom {
     display: none !important;
   }
+  .deck-header {
+    border-bottom: 2px solid #0f172a !important;
+    padding-bottom: 8px !important;
+    margin-bottom: 8px !important;
+  }
+  .brand-title {
+    color: #0f172a !important;
+    font-size: 18pt !important;
+  }
+  .brand-desc {
+    color: #475569 !important;
+    font-size: 10pt !important;
+  }
+  /* Print all 3 views sequentially as distinct pages */
   .deck-main {
     display: flex !important;
-    page-break-after: always;
+    flex-direction: column !important;
+    gap: 12px !important;
+    page-break-after: always !important;
+    break-after: page !important;
+    min-height: auto !important;
     height: auto !important;
+  }
+  .deck-main:last-of-type {
+    page-break-after: auto !important;
+    break-after: auto !important;
   }
   .overview-chart-grid, .cluster-analytics-grid, .simulator-layout-grid {
     height: auto !important;
     display: grid !important;
+    gap: 12px !important;
   }
-  .deck-chart-card, .kpi-box, .cluster-btn-card {
+  .overview-chart-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  .cluster-analytics-grid, .simulator-layout-grid {
+    grid-template-columns: 1fr 1fr !important;
+  }
+  .deck-chart-card, .kpi-box, .cluster-btn-card, .action-card, .sim-stat-card {
+    background: #ffffff !important;
     border: 1px solid #cbd5e1 !important;
     box-shadow: none !important;
-    page-break-inside: avoid;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+    color: #0f172a !important;
+  }
+  .kpi-val, .card-tit, .cl-name, .sim-stat-val, .action-name {
+    color: #0f172a !important;
+  }
+  .kpi-tit, .kpi-sub, .card-sub, .cl-desc, .sim-stat-lbl, .action-desc {
+    color: #475569 !important;
+  }
+  .urgent-banner {
+    background: #fef2f2 !important;
+    border: 1px solid #fecaca !important;
+    color: #991b1b !important;
+    page-break-inside: avoid !important;
+  }
+  .urgent-tit strong {
+    color: #991b1b !important;
+  }
+  .urgent-desc {
+    color: #7f1d1d !important;
+  }
+  .sim-action-summary {
+    background: #fffbeb !important;
+    border-left: 3px solid #f59e0b !important;
+    color: #92400e !important;
   }
 }
 
