@@ -8425,11 +8425,19 @@ let clusterCategoryBarChart = null;
 let elasticityCurveChart = null;
 let activeElasticityScenario = 'base';
 
+// Phase 2: customer search / scatter zoom state
+let customerIndex = null;          // { rows, byId, meta } (lazy loaded)
+let customerIndexPromise = null;
+let scatterPanning = false;        // true while dragging so a pan is not treated as a click
+const CLUSTER_CODE_TO_ID = { 0: 'royal', 1: 'dormant', 2: 'premium', 3: 'cherrypicker' };
+const CLUSTER_COLORS = { 0: '#06b6d4', 1: '#ef4444', 2: '#10b981', 3: '#f59e0b' };
+
 document.addEventListener('DOMContentLoaded', () => {
   renderOverviewKPIs(BUNDLE.summary);
   initOverviewCharts();
   initClusterView();
   initSimulatorView();
+  initCustomerSearch();
   initKeyboardShortcuts();
 });
 
@@ -8766,11 +8774,25 @@ function renderClusterScatter() {
 
   clusterScatterChart = new Chart(ctx, {
     type: 'scatter',
-    data: { datasets: datasets },
+    data: {
+      datasets: datasets.concat([{
+        label: '🔎 검색 고객',
+        isMarker: true,
+        data: [],
+        backgroundColor: 'rgba(255,255,255,0.15)',
+        borderColor: '#ffffff',
+        borderWidth: 3,
+        pointStyle: 'rectRot',
+        pointRadius: 11,
+        pointHoverRadius: 13,
+        order: 0
+      }])
+    },
     options: {
       responsive: true,
       maintainAspectRatio: false,
       onClick: (e, elements) => {
+        if (scatterPanning) return;
         if (elements.length > 0) {
           const el = elements[0];
           const pt = clusterScatterChart.data.datasets[el.datasetIndex].data[el.index];
@@ -8780,7 +8802,24 @@ function renderClusterScatter() {
       plugins: {
         legend: {
           position: 'top',
-          labels: { color: isLightMode ? '#475569' : '#94a3b8', font: { size: 10 }, boxWidth: 10 }
+          labels: {
+            color: isLightMode ? '#475569' : '#94a3b8', font: { size: 10 }, boxWidth: 10,
+            filter: item => item.datasetIndex < 4   // 검색 마커 범례는 숨김
+          }
+        },
+        zoom: {
+          limits: { x: { min: 0 }, y: { min: 0 } },
+          pan: {
+            enabled: true, mode: 'xy', threshold: 6,
+            onPanStart: () => { scatterPanning = true; return true; },
+            onPanComplete: () => { setTimeout(() => { scatterPanning = false; }, 80); syncZoomButton(); }
+          },
+          zoom: {
+            wheel: { enabled: true, speed: 0.12 },
+            pinch: { enabled: true },
+            mode: 'xy',
+            onZoomComplete: () => syncZoomButton()
+          }
         },
         tooltip: {
           callbacks: {
@@ -8810,6 +8849,7 @@ function highlightScatter(clusterId) {
   const targetCode = clusterCodes[clusterId];
 
   clusterScatterChart.data.datasets.forEach((ds, idx) => {
+    if (ds.isMarker) return;
     const isTarget = [0, 2, 3, 1][idx] === targetCode;
     ds.pointRadius = isTarget ? 6 : 2.5;
     ds.borderWidth = isTarget ? 2 : 0;
@@ -9026,14 +9066,270 @@ function renderBasketRules() {
   });
 }
 
+// ----------------- SCATTER ZOOM RESET -----------------
+function syncZoomButton() {
+  const btn = document.getElementById('btn-reset-zoom');
+  if (!btn || !clusterScatterChart) return;
+  const zoomed = typeof clusterScatterChart.isZoomedOrPanned === 'function' && clusterScatterChart.isZoomedOrPanned();
+  btn.classList.toggle('active', !!zoomed);
+}
+
+function resetScatterZoom() {
+  if (!clusterScatterChart) return;
+  if (typeof clusterScatterChart.resetZoom === 'function') clusterScatterChart.resetZoom();
+  syncZoomButton();
+}
+
+// ----------------- CUSTOMER SEARCH ENGINE (in-memory, lazy-loaded) -----------------
+function loadCustomerIndex() {
+  if (customerIndex) return Promise.resolve(customerIndex);
+  if (customerIndexPromise) return customerIndexPromise;
+  customerIndexPromise = fetch('data/customer_index.json')
+    .then(r => {
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return r.json();
+    })
+    .then(j => {
+      const cats = j.meta.categories;
+      const clNames = j.meta.clusters.map(c => c.name);
+      const rows = j.rows.map(r => {
+        const id = 'C' + String(r[0]).padStart(6, '0');
+        const o = { id: id, key: id.toLowerCase(), cl: r[1], spend: r[2], orders: r[3], disc: r[4], cat: cats[r[5]], clName: clNames[r[1]] };
+        o.hay = (o.clName + ' ' + o.cat).toLowerCase();
+        return o;
+      });
+      customerIndex = { rows: rows, byId: new Map(rows.map(o => [o.id, o])), meta: j.meta };
+      return customerIndex;
+    })
+    .catch(err => {
+      customerIndexPromise = null;
+      throw err;
+    });
+  return customerIndexPromise;
+}
+
+// 모든 키워드가 (고객ID | 군집명 | 주력 상품군) 중 하나에 포함되어야 함. 인덱스는 총결제 내림차순이므로 안정 정렬로 ID 일치도만 우선.
+function searchCustomers(query, limit) {
+  const tokens = query.toLowerCase().split(' ').filter(t => t.length > 0);
+  if (!customerIndex || tokens.length === 0) return { total: 0, items: [] };
+  const exact = [];
+  const partial = [];
+  const rest = [];
+  for (const o of customerIndex.rows) {
+    let ok = true;
+    let rank = 2;
+    for (const t of tokens) {
+      if (o.key === t || o.key === 'c' + t.padStart(6, '0')) rank = Math.min(rank, 0);
+      else if (o.key.includes(t)) rank = Math.min(rank, 1);
+      else if (!o.hay.includes(t)) { ok = false; break; }
+    }
+    if (!ok) continue;
+    (rank === 0 ? exact : rank === 1 ? partial : rest).push(o);
+  }
+  const all = exact.concat(partial, rest);
+  return { total: all.length, items: all.slice(0, limit) };
+}
+
+function initCustomerSearch() {
+  const input = document.getElementById('cust-search-input');
+  const list = document.getElementById('cust-search-results');
+  const clearBtn = document.getElementById('cust-search-clear');
+  if (!input || !list) return;
+
+  let timer = null;
+  let items = [];
+  let active = -1;
+
+  const closeList = () => {
+    list.classList.remove('open');
+    list.innerHTML = '';
+    items = [];
+    active = -1;
+    input.setAttribute('aria-expanded', 'false');
+  };
+
+  const note = text => {
+    list.innerHTML = '';
+    const li = document.createElement('li');
+    li.className = 'cust-search-note';
+    li.textContent = text;
+    list.appendChild(li);
+    list.classList.add('open');
+    input.setAttribute('aria-expanded', 'true');
+  };
+
+  const setActive = idx => {
+    active = idx;
+    list.querySelectorAll('li.cust-search-item').forEach((el, i) => el.classList.toggle('active', i === idx));
+    const el = list.querySelectorAll('li.cust-search-item')[idx];
+    if (el) el.scrollIntoView({ block: 'nearest' });
+  };
+
+  const render = res => {
+    list.innerHTML = '';
+    items = res.items;
+    active = -1;
+    if (res.total === 0) { note('검색 결과가 없습니다.'); return; }
+    res.items.forEach((o, i) => {
+      const li = document.createElement('li');
+      li.className = 'cust-search-item';
+      li.setAttribute('role', 'option');
+      li.id = 'cust-search-opt-' + i;
+      const dot = document.createElement('span');
+      dot.className = 'cs-dot';
+      dot.style.background = CLUSTER_COLORS[o.cl];
+      const id = document.createElement('strong');
+      id.textContent = o.id;
+      const meta = document.createElement('span');
+      meta.className = 'cs-meta';
+      meta.textContent = `${o.clName.replace(' 고객군', '')} · ${o.cat}`;
+      const spend = document.createElement('span');
+      spend.className = 'cs-spend';
+      spend.textContent = `${Math.round(o.spend / 10000).toLocaleString()}만원`;
+      li.append(dot, id, meta, spend);
+      li.addEventListener('mousedown', e => { e.preventDefault(); selectCustomerFromSearch(o); });
+      li.addEventListener('mousemove', () => setActive(i));
+      list.appendChild(li);
+    });
+    const foot = document.createElement('li');
+    foot.className = 'cust-search-note';
+    foot.textContent = res.total > res.items.length
+      ? `총 ${res.total.toLocaleString()}명 중 매출 상위 ${res.items.length}명 표시`
+      : `${res.total.toLocaleString()}명`;
+    list.appendChild(foot);
+    list.classList.add('open');
+    input.setAttribute('aria-expanded', 'true');
+  };
+
+  const run = () => {
+    const q = input.value.trim();
+    if (!q) { closeList(); return; }
+    if (!customerIndex) { note('고객 인덱스를 불러오는 중…'); }
+    loadCustomerIndex()
+      .then(() => { if (input.value.trim() === q) render(searchCustomers(q, 8)); })
+      .catch(() => note('고객 인덱스를 불러오지 못했습니다. (file:// 가 아닌 웹 서버/GitHub Pages에서 열어주세요)'));
+  };
+
+  const selectCustomerFromSearch = o => {
+    input.value = o.id;
+    closeList();
+    clearBtn.hidden = false;
+    placeSearchMarker(o);
+    openCustomerModal(o.id);
+  };
+
+  input.addEventListener('focus', () => { loadCustomerIndex().catch(() => {}); if (input.value.trim()) run(); });
+  input.addEventListener('input', () => {
+    clearBtn.hidden = input.value.length === 0;
+    clearTimeout(timer);
+    timer = setTimeout(run, 250);   // debounce 250ms
+  });
+  input.addEventListener('keydown', e => {
+    if (e.key === 'ArrowDown' && items.length) { e.preventDefault(); setActive((active + 1) % items.length); }
+    else if (e.key === 'ArrowUp' && items.length) { e.preventDefault(); setActive((active - 1 + items.length) % items.length); }
+    else if (e.key === 'Enter') {
+      e.preventDefault();
+      if (active >= 0 && items[active]) selectCustomerFromSearch(items[active]);
+      else if (items.length === 1) selectCustomerFromSearch(items[0]);
+    } else if (e.key === 'Escape') {
+      closeList();
+      input.blur();
+    }
+  });
+  input.addEventListener('blur', () => setTimeout(closeList, 120));
+
+  clearBtn.addEventListener('click', () => {
+    input.value = '';
+    clearBtn.hidden = true;
+    closeList();
+    clearSearchMarker();
+    input.focus();
+  });
+
+  // Esc: 모달 닫기 (입력창 단축키 무시 로직과 별개)
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeCustomerModal();
+  });
+}
+
+function placeSearchMarker(o) {
+  if (!clusterScatterChart) renderClusterCharts();
+  const marker = clusterScatterChart.data.datasets.find(ds => ds.isMarker);
+  if (!marker) return;
+  resetScatterZoom();   // 줌 상태와 무관하게 마커가 보이도록
+  marker.data = [{ x: o.disc, y: o.spend / 10000, cid: o.id }];
+  clusterScatterChart.update();
+}
+
+function clearSearchMarker() {
+  if (!clusterScatterChart) return;
+  const marker = clusterScatterChart.data.datasets.find(ds => ds.isMarker);
+  if (marker) {
+    marker.data = [];
+    clusterScatterChart.update();
+  }
+}
+
 // ----------------- PERSONA MODAL DRILLDOWN -----------------
 function openCustomerModal(customerId) {
-  const modal = document.getElementById('cust-modal');
   const sample = CLUSTER_DATA.customer_samples[customerId];
-  if (!sample) {
-    alert(`고객 ${customerId}의 상세 프로필을 준비 중입니다.`);
+  if (sample) {
+    openSampleModal(customerId, sample);
     return;
   }
+  // 상세 이력이 없는 고객: 경량 인덱스(없으면 산점도 표본)로 요약 프로필 표시
+  const show = () => {
+    const o = customerIndex && customerIndex.byId.get(customerId);
+    const sc = CLUSTER_DATA.scatter_sample.find(s => s.고객번호 === customerId);
+    if (!o && !sc) {
+      alert(`고객 ${customerId}의 프로필을 찾을 수 없습니다.`);
+      return;
+    }
+    openSummaryModal(o ? {
+      id: o.id, cl: o.cl, spend: o.spend, orders: o.orders, disc: o.disc, cat: o.cat
+    } : {
+      id: sc.고객번호, cl: sc.cluster, spend: sc.총결제, orders: sc.구매건수, disc: sc.평균할인율, cat: '-'
+    });
+  };
+  if (customerIndex) show();
+  else loadCustomerIndex().then(show).catch(show);
+}
+
+const MODAL_CLUSTER_NAMES = { 0: '로열 충성 고객군 (VIP)', 2: '고단가 프리미엄 고객군', 3: '체리피커 할인민감 고객군', 1: '이탈 위험 고객군' };
+
+function openSummaryModal(c) {
+  const meta = BUNDLE.cluster_list.find(m => m.id === CLUSTER_CODE_TO_ID[c.cl]) || {};
+  const fmt = n => new Intl.NumberFormat('ko-KR').format(n);
+  const aov = c.orders > 0 ? Math.round(c.spend / c.orders) : 0;
+
+  document.getElementById('modal-cust-raw-id').textContent = c.id;
+  document.getElementById('modal-cust-name').textContent = `${c.id} 고객`;
+  document.getElementById('modal-cust-bio').textContent =
+    `${meta.desc || ''} (건당 평균 결제 약 ${fmt(aov)}원)`;
+  document.getElementById('modal-cust-cluster').textContent = MODAL_CLUSTER_NAMES[c.cl];
+
+  document.getElementById('modal-cust-stats').innerHTML = `
+    <div class="modal-stat-box"><span class="lbl">연간 총 결제액</span><span class="val">${fmt(c.spend)}원</span></div>
+    <div class="modal-stat-box"><span class="lbl">평균 할인율</span><span class="val">${c.disc}%</span></div>
+    <div class="modal-stat-box"><span class="lbl">방문 주문건수</span><span class="val">${c.orders}회</span></div>
+    <div class="modal-stat-box"><span class="lbl">주 구매 상품군</span><span class="val">${c.cat}</span></div>
+  `;
+
+  const tbody = document.getElementById('modal-cust-history');
+  tbody.innerHTML = '';
+  const tr = document.createElement('tr');
+  const td = document.createElement('td');
+  td.colSpan = 6;
+  td.className = 'modal-empty-note';
+  td.textContent = '구매 이력 타임라인은 군집별 매출 상위 고객(군집당 15명)에게만 제공됩니다. 이 고객은 요약 프로필만 표시됩니다.';
+  tr.appendChild(td);
+  tbody.appendChild(tr);
+
+  document.getElementById('cust-modal').classList.add('active');
+}
+
+function openSampleModal(customerId, sample) {
+  const modal = document.getElementById('cust-modal');
 
   const clusterNames = { 0: '로열 충성 고객군 (VIP)', 2: '고단가 프리미엄 고객군', 3: '체리피커 할인민감 고객군', 1: '이탈 위험 고객군' };
 

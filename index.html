@@ -9,6 +9,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700;800&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8/hammer.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1/dist/chartjs-plugin-zoom.min.js"></script>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body class="dark-mode">
@@ -178,12 +180,21 @@
           <div class="card-head">
             <div>
               <h3 class="card-tit">군집별 고객 분포 & 할인민감도 스캐터 (K-Means)</h3>
-              <p class="card-sub">점 클릭 시 해당 가상 고객의 스토리텔링 프로필 및 구매 타임라인이 열립니다.</p>
+              <p class="card-sub">휠로 확대/축소, 드래그로 이동합니다. 점이나 검색 결과를 클릭하면 고객 프로필이 열립니다.</p>
             </div>
-            <span class="head-tag" id="selected-cluster-badge">전체 군집 비교</span>
+            <div class="card-head-right">
+              <div class="cust-search" role="search">
+                <span class="cust-search-icon" aria-hidden="true">🔎</span>
+                <input type="text" id="cust-search-input" class="cust-search-input" placeholder="고객 ID / 군집 / 상품군 검색 (예: C000155, 체리피커 소형가전)" autocomplete="off" spellcheck="false" role="combobox" aria-expanded="false" aria-controls="cust-search-results" aria-label="고객 검색">
+                <button type="button" id="cust-search-clear" class="cust-search-clear" aria-label="검색 지우기" hidden>✕</button>
+                <ul id="cust-search-results" class="cust-search-results" role="listbox"></ul>
+              </div>
+              <span class="head-tag" id="selected-cluster-badge">전체 군집 비교</span>
+            </div>
           </div>
           <div class="card-chart">
             <canvas id="clusterScatterChart"></canvas>
+            <button type="button" id="btn-reset-zoom" class="zoom-reset-btn" onclick="resetScatterZoom()" title="확대/이동 상태를 처음으로 되돌립니다">🔍 줌 초기화 (Reset Zoom)</button>
           </div>
         </div>
 
